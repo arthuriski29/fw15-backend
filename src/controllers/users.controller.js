@@ -1,4 +1,5 @@
 const userModel = require("../models/users.model")
+const errorHandler = require("../helpers/errorHandler.helper")
 
 exports.getAllUsers = async(request, response) => {
     const data = await userModel.findAll()
@@ -18,10 +19,7 @@ exports.getOneUser = async(request, response) => {
             results: data
         })
     }
-    return response.status(404).json({
-        success: false,
-        message: "Error: user not found",
-    })
+    errorHandler(response, data)
 }
 
 exports.createUser = async (request, response,) => {
@@ -32,29 +30,31 @@ exports.createUser = async (request, response,) => {
             message: `Create user ${request.body.email} successfully`,
             results: data
         })
-    
     } catch (error) {
-        return response.status(404).json({
-            success: false,
-            message: `User with email ${request.body.email} had been created !`
-        })
+        errorHandler(response, error)
     }
 }
 
 exports.updateUser = async (request, response) => {
     const data = await userModel.update(request.params.id, request.body)
-    return response.json({
-        success: true,
-        message: "Update user successfully",
-        results: data
-    })
+    if(data) {
+        return response.json({
+            success: true,
+            message: "Update user successfully",
+            results: data
+        })
+    }
+    errorHandler(response, data)
 }
 
 exports.deleteUser = async (request, response) => {
     const data = await userModel.destroy(request.params.id)
-    return response.json({
-        success: true,
-        message: "Delete user successfully",
-        results: data
-    })
+    if(data) {
+        return response.json({
+            success: true,
+            message: "Delete user successfully",
+            results: data
+        })
+    }
+    errorHandler(response, data)
 }
