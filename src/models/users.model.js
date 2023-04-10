@@ -48,3 +48,4 @@ exports.destroy = async function(id){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+

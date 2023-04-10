@@ -14,12 +14,13 @@ exports.getAllUsers = async(request, response) => {
     
 }
 
+
 exports.getOneUser = async(request, response) => {
     const data = await userModel.findOne(request.params.id)
     if(data){
         return response.json({
             success: true,
-            message: "Detail users",
+            message: "Detail user",
             results: data
         })
     }
@@ -28,15 +29,22 @@ exports.getOneUser = async(request, response) => {
 
 exports.createUser = async (request, response,) => {
     try {
+        if (request.body.email == "" && request.body.password == "") {
+            throw Error("empty_field")
+        } 
+        if (!request.body.email.includes("@")){
+            throw Error("email_format")
+        }
         const data = await userModel.insert(request.body)
         return response.json({
             success: true,
             message: `Create user ${request.body.email} successfully`,
             results: data
         })
+
     } catch (error) {
-        errorHandler(response, error)
-    }
+        return errorHandler(response, error)
+    } 
 }
 
 exports.updateUser = async (request, response) => {
@@ -52,13 +60,16 @@ exports.updateUser = async (request, response) => {
 }
 
 exports.deleteUser = async (request, response) => {
-    const data = await userModel.destroy(request.params.id)
-    if(data) {
+    try{
+        const data = await userModel.destroy(request.params.id)
         return response.json({
             success: true,
             message: "Delete user successfully",
             results: data
         })
+
+    }catch(error){
+        errorHandler(response, error)
+
     }
-    errorHandler(response, data)
 }
