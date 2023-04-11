@@ -34,6 +34,18 @@ const errorHandler = (response, error) => {
             message: "Wrong email format"
         })
     }
+    if(error?.message?.includes("wrong_credentials")) {
+        return response.status(401).json({
+            success: false, 
+            message: "Wrong email or password"
+        })
+    }
+    if(error?.message?.includes("unauthorized")) {
+        return response.status(401).json({
+            success: false, 
+            message: "Unauthorized"
+        })
+    }
     console.log(error)
     return response.status(500).json({
         success: false,
