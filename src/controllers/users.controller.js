@@ -1,5 +1,6 @@
 const userModel = require("../models/users.model")
 const errorHandler = require("../helpers/errorHandler.helper")
+const argon = require("argon2")
 
 exports.getAllUsers = async(request, response) => {
     try {
@@ -24,6 +25,7 @@ exports.getAllUsers = async(request, response) => {
 
 exports.getOneUser = async(request, response) => {
     const data = await userModel.findOne(request.params.id)
+    console.log("Logged as user with id" +request.user.id)
     if(data){
         return response.json({
             success: true,
@@ -45,11 +47,16 @@ exports.createUser = async (request, response,) => {
         if (!request.body.email.includes("@")){
             throw Error("email_format")
         }
-        const data = await userModel.insert(request.body)
+        const hash = await argon.hash(request.body.password)
+        const data = {
+            ...request.body,
+            password: hash
+        }
+        const user = await userModel.insert(data)
         return response.json({
             success: true,
             message: `Create user ${request.body.email} successfully`,
-            results: data
+            results: user
         })
     } catch (error) {
         return errorHandler(response, error)

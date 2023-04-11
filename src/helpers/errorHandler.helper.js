@@ -6,6 +6,20 @@ const errorHandler = (response, error) => {
             message: "Error: Email already exist !"
         })
     }
+    if(error?.message?.includes("jwt malformed")) {
+      
+        return response.status(401).json({
+            success: false, 
+            message: "Token is invalid"
+        })
+    }
+    if(error?.message?.includes("invalid signature")) {
+      
+        return response.status(401).json({
+            success: false, 
+            message: "Token signature is invalid"
+        })
+    }
     if(error?.message?.includes("name_empty_field")) {
       
         return response.status(400).json({
@@ -38,6 +52,12 @@ const errorHandler = (response, error) => {
         return response.status(401).json({
             success: false, 
             message: "Wrong email or password"
+        })
+    }
+    if(error?.message?.includes("password_unmatch")) {
+        return response.status(400).json({
+            success: false, 
+            message: "Password and Confirm Password unmatched"
         })
     }
     if(error?.message?.includes("unauthorized")) {
