@@ -1,14 +1,16 @@
 const errorHandler = (response, error) => {
-    // if (error?.message?.includes("invalid input")) {
-    //     return response.status(409).json({
-    //         success: false,
-    //         message: "Error: Invalid input, please select an id !"
-    //     })
-    // }
+    
     if (error?.message?.includes("duplicate key")) {
         return response.status(409).json({
             success: false,
             message: "Error: Email already exist !"
+        })
+    }
+    if(error?.message?.includes("name_empty_field")) {
+      
+        return response.status(400).json({
+            success: false, 
+            message: "Name cannot be empty"
         })
     }
     if(error === undefined) {
@@ -17,6 +19,7 @@ const errorHandler = (response, error) => {
             message: "Error: user not found"
         })
     }
+    
     if(error?.message?.includes("empty_field")) {
       
         return response.status(400).json({
@@ -31,6 +34,7 @@ const errorHandler = (response, error) => {
             message: "Wrong email format"
         })
     }
+    console.log(error)
     return response.status(500).json({
         success: false,
         message: "Error: Internal server error !"

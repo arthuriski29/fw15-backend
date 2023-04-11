@@ -6,143 +6,187 @@
 	},
 	"item": [
 		{
-			"name": "USERS",
+			"name": "ADMIN",
 			"item": [
 				{
-					"name": "GET ALL USERS",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET DETAIL USER",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users/:id",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "325"
+					"name": "USERS",
+					"item": [
+						{
+							"name": "GET ALL USERS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/users?page=2&sortBy=ASC&sort=fullName",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "niel",
+											"disabled": true
+										},
+										{
+											"key": "sortBy",
+											"value": "ASC"
+										},
+										{
+											"key": "sort",
+											"value": "fullName"
+										}
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CREATE USER",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "lewandowski@mail.com",
-									"type": "default"
-								},
-								{
-									"key": "password",
-									"value": "1234",
-									"type": "default"
-								}
-							]
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{url}}/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UPDATE USER",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "lewandowski@mail.com",
-									"type": "default"
-								},
-								{
-									"key": "password",
-									"value": "5432",
-									"type": "default"
+						{
+							"name": "GET DETAIL USER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/users/:id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{url}}/users/:id",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "999"
+						{
+							"name": "CREATE USER",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "bartoszT@mail.com",
+											"type": "default"
+										},
+										{
+											"key": "password",
+											"value": "1234",
+											"type": "default"
+										},
+										{
+											"key": "fullName",
+											"value": "Bartosz Tiedemann",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/admin/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE USER",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users/:id",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "9"
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE USER",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "robertoDB@mail.com",
+											"type": "default"
+										},
+										{
+											"key": "password",
+											"value": "8888",
+											"type": "default"
+										},
+										{
+											"key": "fullName",
+											"value": "Roberto Di Baggio",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/admin/users/:id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE USER",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/users/:id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		},

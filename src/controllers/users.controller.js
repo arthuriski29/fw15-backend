@@ -2,17 +2,24 @@ const userModel = require("../models/users.model")
 const errorHandler = require("../helpers/errorHandler.helper")
 
 exports.getAllUsers = async(request, response) => {
-    const data = await userModel.findAll()
-    if (data) {
-        return response.json({
-            success: true,
-            message: "List of all users",
-            results: data
-        })
-    }
-    errorHandler(response, data)
-    
+    try {
+        const data = await userModel.findAll(
+            request.query.page, 
+            request.query.limit, 
+            request.query.search,
+            request.query.sort, request.query.sortBy)
+        if (data) {
+            return response.json({
+                success: true,
+                message: "List of all users",
+                results: data
+            })
+        }
+    } catch (error) {
+        return errorHandler(response, error)
+    }  
 }
+    
 
 
 exports.getOneUser = async(request, response) => {
@@ -29,8 +36,11 @@ exports.getOneUser = async(request, response) => {
 
 exports.createUser = async (request, response,) => {
     try {
-        if (request.body.email == "" && request.body.password == "") {
+        if ((request.body.email == "" || request.body.password == "") ||(request.body.email == null || request.body.password == null)) {
             throw Error("empty_field")
+        } 
+        if ( request.body.fullName == "" || request.body.fullName == null || request.body.fullName == undefined ) {
+            throw Error("name_empty_field")
         } 
         if (!request.body.email.includes("@")){
             throw Error("email_format")
@@ -41,7 +51,6 @@ exports.createUser = async (request, response,) => {
             message: `Create user ${request.body.email} successfully`,
             results: data
         })
-
     } catch (error) {
         return errorHandler(response, error)
     } 
@@ -60,16 +69,19 @@ exports.updateUser = async (request, response) => {
 }
 
 exports.deleteUser = async (request, response) => {
-    try{
+    try {
         const data = await userModel.destroy(request.params.id)
+        if(!data) {
+            return errorHandler(response, undefined)
+        }
         return response.json({
             success: true,
             message: "Delete user successfully",
             results: data
         })
-
-    }catch(error){
-        errorHandler(response, error)
-
+      
+    } catch (error) {
+        return errorHandler(response, error)
     }
+
 }
