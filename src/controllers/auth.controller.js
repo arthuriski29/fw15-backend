@@ -12,7 +12,7 @@ exports.login = async (request, response) => {
             throw Error("wrong_credentials")
         }
         const verify = await argon.verify(user.password, password)
-        if(verify){
+        if(!verify){
             throw Error("wrong_credentials")
         }
         const token = jwt.sign({id: user.id}, APP_SECRET)

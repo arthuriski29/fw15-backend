@@ -17,7 +17,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/admin/users?page=2&sortBy=ASC&sort=fullName",
+									"raw": "{{url}}/admin/users?search=fazz",
 									"host": [
 										"{{url}}"
 									],
@@ -28,7 +28,8 @@
 									"query": [
 										{
 											"key": "page",
-											"value": "2"
+											"value": "2",
+											"disabled": true
 										},
 										{
 											"key": "limit",
@@ -37,16 +38,17 @@
 										},
 										{
 											"key": "search",
-											"value": "niel",
-											"disabled": true
+											"value": "fazz"
 										},
 										{
 											"key": "sortBy",
-											"value": "ASC"
+											"value": "ASC",
+											"disabled": true
 										},
 										{
 											"key": "sort",
-											"value": "fullName"
+											"value": "fullName",
+											"disabled": true
 										}
 									]
 								}
@@ -71,7 +73,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "3"
+											"value": "7"
 										}
 									]
 								}
@@ -88,18 +90,27 @@
 									"urlencoded": [
 										{
 											"key": "email",
-											"value": "bartoszT@mail.com",
-											"type": "default"
+											"value": "mauro@mail.com",
+											"type": "default",
+											"disabled": true
 										},
 										{
 											"key": "password",
 											"value": "1234",
-											"type": "default"
+											"type": "default",
+											"disabled": true
 										},
 										{
 											"key": "fullName",
-											"value": "Bartosz Tiedemann",
-											"type": "default"
+											"value": "Mauro Icardi",
+											"type": "default",
+											"disabled": true
+										},
+										{
+											"key": "picture",
+											"value": "",
+											"type": "default",
+											"disabled": true
 										}
 									]
 								},
@@ -126,7 +137,7 @@
 									"urlencoded": [
 										{
 											"key": "email",
-											"value": "robertoDB@mail.com",
+											"value": "robertoDiBa@mail.com",
 											"type": "default"
 										},
 										{
@@ -191,6 +202,87 @@
 			]
 		},
 		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fazztrack@mail.com",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "fullName",
+									"value": "Fazztrack",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "fazztrack@mail.com",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "default"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "1234",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "TEST CONNECTION",
 			"request": {
 				"method": "GET",
@@ -205,6 +297,16 @@
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",

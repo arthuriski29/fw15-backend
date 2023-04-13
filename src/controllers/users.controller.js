@@ -38,15 +38,15 @@ exports.getOneUser = async(request, response) => {
 
 exports.createUser = async (request, response,) => {
     try {
-        if ((request.body.email == "" || request.body.password == "") ||(request.body.email == null || request.body.password == null)) {
-            throw Error("empty_field")
-        } 
-        if ( request.body.fullName == "" || request.body.fullName == null || request.body.fullName == undefined ) {
-            throw Error("name_empty_field")
-        } 
-        if (!request.body.email.includes("@")){
-            throw Error("email_format")
-        }
+        // if ((request.body.email == "" || request.body.password == "") ||(request.body.email == null || request.body.password == null)) {
+        //     throw Error("empty_field")
+        // } 
+        // if ( request.body.fullName == "" || request.body.fullName == null || request.body.fullName == undefined ) {
+        //     throw Error("name_empty_field")
+        // } 
+        // if (!request.body.email.includes("@")){
+        //     throw Error("email_format")
+        // }
         const hash = await argon.hash(request.body.password)
         const data = {
             ...request.body,
