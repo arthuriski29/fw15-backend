@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken")
 const errorHandler = require("../helpers/errorHandler.helper")
+const jwt = require("jsonwebtoken")
 const {APP_SECRET} = process.env
 
 const authMiddleware = (request, response, next) => {

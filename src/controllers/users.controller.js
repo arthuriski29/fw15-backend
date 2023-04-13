@@ -52,6 +52,9 @@ exports.createUser = async (request, response,) => {
             ...request.body,
             password: hash
         }
+        if(request.file){ //agar nama file yang diupload masuk ke dalam database
+            data.picture = request.file.filename
+        }
         const user = await userModel.insert(data)
         return response.json({
             success: true,

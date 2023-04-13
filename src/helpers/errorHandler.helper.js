@@ -12,14 +12,14 @@ const errorHandler = (response, error) => {
         })
     }
     if(error?.message?.includes("jwt malformed")) {
-      
+        console.log(error)
         return response.status(401).json({
             success: false, 
             message: "Token is invalid"
         })
     }
     if(error?.message?.includes("invalid signature")) {
-      
+        
         return response.status(401).json({
             success: false, 
             message: "Token signature is invalid"
