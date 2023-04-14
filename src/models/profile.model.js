@@ -1,5 +1,7 @@
 const db = require("../helpers/db.helper")
 
+const table = "profile"
+
 exports.findAll = async function(page, limit, search, sort, sortBy){
     page = parseInt(page) || 1
     limit = parseInt(limit) || 5
@@ -9,8 +11,8 @@ exports.findAll = async function(page, limit, search, sort, sortBy){
     const offset = (page - 1) * limit
 
     const query = `
-    SELECT * FROM "users" 
-    WHERE "email" LIKE $3 
+    SELECT * FROM "${table}" 
+    WHERE "fullName" LIKE $3 
     ORDER BY "${sort}" ${sortBy} 
     LIMIT $1 OFFSET $2
     `
@@ -21,7 +23,7 @@ exports.findAll = async function(page, limit, search, sort, sortBy){
 
 exports.findOne = async function(id){
     const query = `
-    SELECT * FROM "users"
+    SELECT * FROM "${table}"
     WHERE id=$1
     `
     const values = [id]
@@ -31,7 +33,7 @@ exports.findOne = async function(id){
 
 exports.findOneByEmail = async function(email){
     const query = `
-    SELECT * FROM "users"
+    SELECT * FROM "${table}"
     WHERE email=$1
     `
     const values = [email]
@@ -42,18 +44,26 @@ exports.findOneByEmail = async function(email){
 
 exports.insert = async function(data){
     const query = `
-    INSERT INTO "users" ("username", "email", "password") 
-    VALUES ($1, $2, $3) RETURNING *
+    INSERT INTO "${table}" 
+    ("picture", "fullName", "phoneNumber", "gender", "profession", "nationallity", "birthDate",) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *
     `  
-    const values = [data.username, data.email, data.password]   
+    const values = [data.picture, data.fullName, data.phoneNumber, data.gender, data.profession, data.nationallity, data.birthDate]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }
 
 exports.update = async function(id, data){
     const query = `
-    UPDATE "users" 
-    SET "username"=$2, "email"=$3, "password"=$4
+    UPDATE "${table}" 
+    SET "picture"=COALESCE(NULLIF($2, ""), "picture"), 
+    SET "fullName"=COALESCE(NULLIF($3, ""), "fullName"), 
+    SET "phoneNumber"=COALESCE(NULLIF($4, ""), "phoneNumber"), 
+    SET "gender"=COALESCE(NULLIF($5, ""), "gender"), 
+    SET "profession"=COALESCE(NULLIF($6, ""), "profession"), 
+    SET "nationallity"=COALESCE(NULLIF($7, ""), "nationallity"), 
+    SET "birthDate"=COALESCE(NULLIF($8, ""), "birthDate"), 
+    
     WHERE "id"=$1
     RETURNING *
     `  
@@ -64,7 +74,7 @@ exports.update = async function(id, data){
 
 exports.destroy = async function(id){
     const query = `
-    DELETE FROM "users" 
+    DELETE FROM "${table}" 
     WHERE "id"=$1
     RETURNING *
     `  

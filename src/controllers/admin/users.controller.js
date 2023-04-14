@@ -68,17 +68,37 @@ exports.createUser = async (request, response,) => {
     } 
 }
 
-exports.updateUser = async (request, response) => {
-    const data = await userModel.update(request.params.id, request.body)
-    if(data) {
+exports.updateUser = async (request, response) => { //catatan diDS kang irul pakai try()-catch() buat ini. tapi yang ini udah worked
+    try{
+        const data ={
+            ...request.body
+        }
+        if(request.body.password) {
+            data.password = await argon.hash(request.body.password)
+        }
+        const user = await userModel.update(request.params.id, data)
+        if(!user) {
+            throw Error("update_user_failed")
+        }
         return response.json({
             success: true,
             message: "Update user successfully",
-            results: data
+            results: user
         })
-    }
-    // fileRemover(request.file)
-    errorHandler(response, data)
+    } catch(error){
+        errorHandler(response, error)
+    } 
+    //cara sendiri  
+    // const data = await userModel.update(request.params.id, request.body)
+    // if(data) {
+    //     return response.json({
+    //         success: true,
+    //         message: "Update user successfully",
+    //         results: data
+    //     })
+    // }
+    // // fileRemover(request.file)
+    // errorHandler(response, data)
 }
 
 exports.deleteUser = async (request, response) => {

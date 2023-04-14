@@ -1,7 +1,7 @@
 const {body, query, param, validationResult} = require("express-validator")
 // const errorHandler = require("../helpers/errorHandler.helper")
 
-const fileRemover = require("../helpers/fileRemover.helper")
+// const fileRemover = require("../helpers/fileRemover.helper")
  
 const emailFormat = body("email").isEmail().withMessage("Email is invalid")
 const strongPassword = body("password").isStrongPassword().withMessage("Password must be strong")
@@ -20,9 +20,9 @@ const rules = {
     ],
     getAllUsers: [ //agar pada GET ALL USERS, input Sort nya hanya bisa diinputkan ASC atau DESC, lainnya error
         // query("page").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid"),
-        // query("limit").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid"),
+        query("limit").toInt().isDecimal().withMessage("Input must be a number").optional({nullable:true}),
         // query("search").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid"),
-        query("sort").isIn(["id", "fullName"]).withMessage("Sort by fullName or ID"),
+        query("sort").isIn(["id", "userame"]).withMessage("Sort by userame or ID").optional({nullable: true}),
         query("sortBy").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid").optional({nullable: true})
 
     ],
@@ -36,7 +36,7 @@ const validator = (request, response, next) => {
     try{
         
         if(!errors.isEmpty()) {
-            fileRemover(request.file)
+            // fileRemover(request.file)
             throw Error("validation")
         }
         return next()

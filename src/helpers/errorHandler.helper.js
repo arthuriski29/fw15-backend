@@ -32,6 +32,12 @@ const errorHandler = (response, error) => {
             message: "Name cannot be empty"
         })
     }
+    if(error?.message?.includes("update_user_failed")) { //cara kang irul di validator untuk controller update
+        return response.status(400).json({
+            success: false,
+            message: "Id is not found"
+        })
+    }
     if(error === undefined) {
         return response.status(404).json({
             success: false,
