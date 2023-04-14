@@ -1,7 +1,7 @@
-const userModel = require("../models/users.model")
-const errorHandler = require("../helpers/errorHandler.helper")
+const userModel = require("../../models/users.model")
+const errorHandler = require("../../helpers/errorHandler.helper")
 const argon = require("argon2")
-const fileRemover = require("../helpers/fileRemover.helper")
+// const fileRemover = require("../../helpers/fileRemover.helper")
 
 exports.getAllUsers = async(request, response) => {
     try {
@@ -53,9 +53,9 @@ exports.createUser = async (request, response,) => {
             ...request.body,
             password: hash
         }
-        if(request.file){ //agar nama file yang diupload masuk ke dalam database
-            data.picture = request.file.filename
-        }
+        // if(request.file){ //agar nama file yang diupload masuk ke dalam database
+        //     data.picture = request.file.filename
+        // }
         const user = await userModel.insert(data)
         return response.json({
             success: true,
@@ -63,7 +63,7 @@ exports.createUser = async (request, response,) => {
             results: user
         })
     } catch (error) {
-        fileRemover(request.file)
+        // fileRemover(request.file)
         return errorHandler(response, error)
     } 
 }
@@ -77,7 +77,7 @@ exports.updateUser = async (request, response) => {
             results: data
         })
     }
-    fileRemover(request.file)
+    // fileRemover(request.file)
     errorHandler(response, data)
 }
 

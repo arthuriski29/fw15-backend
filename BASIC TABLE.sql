@@ -1,4 +1,4 @@
-CREATE TABLE "users0" (
+CREATE TABLE "users" (
   "id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   "username" VARCHAR(255),
   "email" VARCHAR(255) UNIQUE,
@@ -6,6 +6,14 @@ CREATE TABLE "users0" (
   "createdAt" TIMESTAMP DEFAULT NOW(),
   "updatedAt" TIMESTAMP DEFAULT NULL
 );
+
+INSERT INTO "users" ("email", "password") VALUES ('fazztrack@mail.com', '1234');
+UPDATE "users" SET "email"='admin@mail.com' WHERE "id"=1;
+DELETE FROM "users" WHERE "id"=5;
+SELECT * FROM "users" WHERE "id"=325;
+
+
+
 CREATE TABLE "profile" (
   "id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   "picture" VARCHAR(255),
@@ -19,6 +27,7 @@ CREATE TABLE "profile" (
   "createdAt" TIMESTAMP DEFAULT NOW(),
   "updatedAt" TIMESTAMP DEFAULT NULL
 );
+
 CREATE TABLE "events" (
   "id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   "picture" VARCHAR(255),

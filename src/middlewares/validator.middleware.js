@@ -5,7 +5,8 @@ const fileRemover = require("../helpers/fileRemover.helper")
  
 const emailFormat = body("email").isEmail().withMessage("Email is invalid")
 const strongPassword = body("password").isStrongPassword().withMessage("Password must be strong")
-const fullNameFormat = body("fullName").isLength({min: 3, max: 80}).withMessage("Name length si invalid")
+// const fullNameFormat = body("fullName").isLength({min: 3, max: 80}).withMessage("Name length si invalid")
+const userNameFormat = body("username").isLength({min: 3, max: 20}).withMessage("Username length si invalid")
 
 const rules = {
     authLogin: [
@@ -13,7 +14,7 @@ const rules = {
         body("password").isLength({min:1}).withMessage("Password is invalid")
     ],
     createUser: [
-        fullNameFormat,
+        userNameFormat,
         emailFormat, 
         strongPassword
     ],
