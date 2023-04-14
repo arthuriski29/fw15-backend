@@ -1,11 +1,11 @@
-const userModel = require("../../models/users.model")
+const profileModel = require("../../models/profile.model")
 const errorHandler = require("../../helpers/errorHandler.helper")
-const argon = require("argon2")
-// const fileRemover = require("../../helpers/fileRemover.helper")
+// const argon = require("argon2")
+const fileRemover = require("../../helpers/fileRemover.helper")
 
-exports.getAllUsers = async(request, response) => {
+exports.getAllProfiles = async(request, response) => {
     try {
-        const data = await userModel.findAll(
+        const data = await profileModel.findAll(
             request.query.page, 
             request.query.limit, 
             request.query.search,
@@ -24,9 +24,9 @@ exports.getAllUsers = async(request, response) => {
     
 
 
-exports.getOneUser = async(request, response) => {
-    const data = await userModel.findOne(request.params.id)
-    console.log("Logged as user with id" +request.user.id)
+exports.getOneProfile = async(request, response) => {
+    const data = await profileModel.findOne(request.params.id)
+    // console.log("Logged as user profile with id" + request.data.id )
     if(data){
         return response.json({
             success: true,
@@ -37,7 +37,7 @@ exports.getOneUser = async(request, response) => {
     errorHandler(response, data)
 }
 
-exports.createUser = async (request, response,) => {
+exports.createProfile = async (request, response,) => {
     try {
         // if ((request.body.email == "" || request.body.password == "") ||(request.body.email == null || request.body.password == null)) {
         //     throw Error("empty_field")
@@ -48,48 +48,52 @@ exports.createUser = async (request, response,) => {
         // if (!request.body.email.includes("@")){
         //     throw Error("email_format")
         // }
-        const hash = await argon.hash(request.body.password)
+        // const hash = await argon.hash(request.body.password)
         const data = {
-            ...request.body,
-            password: hash
+            ...request.body
+            // password: hash
         }
-        // if(request.file){ //agar nama file yang diupload masuk ke dalam database
-        //     data.picture = request.file.filename
-        // }
-        const user = await userModel.insert(data)
+        if(request.file){ //agar nama file yang diupload masuk ke dalam database
+            data.picture = request.file.filename
+        }
+        const profile = await profileModel.insert(data)
         return response.json({
             success: true,
             message: "Create user profile successfully",
-            results: user
+            results: profile
         })
     } catch (error) {
-        // fileRemover(request.file)
+        fileRemover(request.file)
         return errorHandler(response, error)
     } 
 }
 
-exports.updateUser = async (request, response) => { //catatan diDS kang irul pakai try()-catch() buat ini. tapi yang ini udah worked
+exports.updateProfile = async (request, response) => { //catatan diDS kang irul pakai try()-catch() buat ini. tapi yang ini udah worked
     try{
         const data ={
             ...request.body
         }
-        if(request.body.password) {
-            data.password = await argon.hash(request.body.password)
+        // if(request.body.password) {
+        //     data.password = await argon.hash(request.body.password)
+        // }
+        if(request.file){ //agar nama file yang diupload masuk ke dalam database
+            data.picture = request.file.filename
         }
-        const user = await userModel.update(request.params.id, data)
-        if(!user) {
+        const profile = await profileModel.update(request.params.id, data)
+        if(!profile) {
             throw Error("update_profile_failed")
         }
         return response.json({
             success: true,
             message: "Update user profile successfully",
-            results: user
+            results: profile
         })
     } catch(error){
+        fileRemover(request.file)
         errorHandler(response, error)
     } 
     //cara sendiri  
-    // const data = await userModel.update(request.params.id, request.body)
+    // const data = await profileModel.update(request.params.id, request.body)
     // if(data) {
     //     return response.json({
     //         success: true,
@@ -101,9 +105,9 @@ exports.updateUser = async (request, response) => { //catatan diDS kang irul pak
     // errorHandler(response, data)
 }
 
-exports.deleteUser = async (request, response) => {
+exports.deleteProfile = async (request, response) => {
     try {
-        const data = await userModel.destroy(request.params.id)
+        const data = await profileModel.destroy(request.params.id)
         if(!data) {
             return errorHandler(response, undefined)
         }

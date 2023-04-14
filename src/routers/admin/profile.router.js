@@ -1,14 +1,14 @@
 const profileRouter = require("express").Router()
 
-const profileController = require("../../controllers/admin/profile.controller")
+const profileController = require("../../controllers/admin/profile.controllers")
 const uploadMiddleware = require("../../middlewares/upload.middleware")
-const validate = require("../../middlewares/validator.middleware")
+// const validate = require("../../middlewares/validator.middleware")
 
 
-profileRouter.get("/", validate("getAllprofiles"), profileController.getAllprofiles)
-profileRouter.get("/:id", validate("idParams"), profileController.getOneprofile)
-profileRouter.post("/", uploadMiddleware("picture"), validate("createprofile"), profileController.createprofile)
-profileRouter.patch("/:id", uploadMiddleware("picture"), validate("idParams"), validate("createprofile"), profileController.updateprofile)
-profileRouter.delete("/:id", validate("idParams"), profileController.deleteprofile)
+profileRouter.get("/", profileController.getAllProfiles)
+profileRouter.get("/:id", profileController.getOneProfile)
+profileRouter.post("/", uploadMiddleware("picture"), profileController.createProfile)
+profileRouter.patch("/:id", uploadMiddleware("picture"), profileController.updateProfile)
+profileRouter.delete("/:id", profileController.deleteProfile)
 
 module.exports = profileRouter

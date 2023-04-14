@@ -18,15 +18,18 @@ CREATE TABLE "profile" (
   "id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   "picture" VARCHAR(255),
   "fullName" VARCHAR(255),
-  "phoneNumber" INTEGER,
+  "phoneNumber" VARCHAR(255),
   "gender" BOOLEAN,
   "profession" VARCHAR(255),
-  "nationallity" VARCHAR(255),
+  "nationality" VARCHAR(255),
   "birthDate" DATE,
 
   "createdAt" TIMESTAMP DEFAULT NOW(),
   "updatedAt" TIMESTAMP DEFAULT NULL
 );
+ALTER TABLE "profile" DROP COLUMN "phoneNumber";
+ALTER TABLE "profile" ADD COLUMN "phoneNumber" VARCHAR(255);
+
 
 CREATE TABLE "events" (
   "id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,

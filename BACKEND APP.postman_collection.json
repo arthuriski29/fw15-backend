@@ -17,7 +17,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/admin/users?page=1&sort=fullName",
+									"raw": "{{url}}/admin/users?page=1",
 									"host": [
 										"{{url}}"
 									],
@@ -47,7 +47,8 @@
 										},
 										{
 											"key": "sort",
-											"value": "fullName"
+											"value": "fullName",
+											"disabled": true
 										}
 									]
 								}
@@ -89,12 +90,12 @@
 									"urlencoded": [
 										{
 											"key": "username",
-											"value": "fazztrack",
+											"value": "fa",
 											"type": "default"
 										},
 										{
 											"key": "email",
-											"value": "fazztrack@mail.com",
+											"value": "fazztrackkeren@mail.com",
 											"type": "default"
 										},
 										{
@@ -126,18 +127,18 @@
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
+											"key": "username",
+											"value": "fazz",
+											"type": "default"
+										},
+										{
 											"key": "email",
-											"value": "robertoDiBag@mail.com",
+											"value": "fazz@mail.com",
 											"type": "default"
 										},
 										{
 											"key": "password",
-											"value": "1234",
-											"type": "default"
-										},
-										{
-											"key": "fullName",
-											"value": "Roberto Di Baggio",
+											"value": "!@#123Abc",
 											"type": "default"
 										}
 									]
@@ -155,7 +156,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "5"
+											"value": "1"
 										}
 									]
 								}
@@ -463,42 +464,196 @@
 					"name": "PROFILE",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "GET ALL PROFILES",
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/profile",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"profile"
+									]
+								}
 							},
 							"response": []
 						},
 						{
-							"name": "New Request",
+							"name": "GET DETAIL PROFILE",
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/profile/:id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
 							},
 							"response": []
 						},
 						{
-							"name": "New Request",
+							"name": "CREATE PROFILE",
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/DELL/Downloads/Real-Madrids-Cristiano-Ronaldo-celebrates-scoring-their-first-goal.jpg"
+										},
+										{
+											"key": "fullName",
+											"value": "Cristiano Ronaldo",
+											"type": "default"
+										},
+										{
+											"key": "phoneNumber",
+											"value": "0812211222",
+											"type": "default"
+										},
+										{
+											"key": "gender",
+											"value": "1",
+											"type": "default"
+										},
+										{
+											"key": "profession",
+											"value": "Football Player",
+											"type": "default"
+										},
+										{
+											"key": "nationality",
+											"value": "Portugal",
+											"type": "default"
+										},
+										{
+											"key": "birthDate",
+											"value": "1985-02-05",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/admin/profile",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"profile"
+									]
+								}
 							},
 							"response": []
 						},
 						{
-							"name": "New Request",
+							"name": "UPDATE PROFILE",
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "picture",
+											"type": "file",
+											"src": [],
+											"disabled": true
+										},
+										{
+											"key": "fullName",
+											"value": "Lionel Andrés Messi Cuccittini",
+											"type": "default"
+										},
+										{
+											"key": "phoneNumber",
+											"value": "0812211221",
+											"type": "default",
+											"disabled": true
+										},
+										{
+											"key": "gender",
+											"value": "1",
+											"type": "default"
+										},
+										{
+											"key": "profession",
+											"value": "",
+											"type": "default",
+											"disabled": true
+										},
+										{
+											"key": "nationality",
+											"value": "Argentina",
+											"type": "default"
+										},
+										{
+											"key": "birthDate",
+											"value": "1987-06-29",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/admin/profile/:id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
 							},
 							"response": []
 						},
 						{
-							"name": "New Request",
+							"name": "DELETE PROFILE",
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/profile/:id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
 							},
 							"response": []
 						}
