@@ -18,7 +18,18 @@ const rules = {
         emailFormat, 
         strongPassword
     ],
+    createCity: [
+        body("name").isLength({min: 3, max: 20}).withMessage("name length si invalid")
+    ],
     getAllUsers: [ //agar pada GET ALL USERS, input Sort nya hanya bisa diinputkan ASC atau DESC, lainnya error
+        // query("page").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid"),
+        query("limit").toInt().isDecimal().withMessage("Input must be a number").optional({nullable:true}),
+        // query("search").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid"),
+        query("sort").isIn(["id", "userame"]).withMessage("Sort by userame or ID").optional({nullable: true}),
+        query("sortBy").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid").optional({nullable: true})
+
+    ],
+    getAllCities: [ //agar pada GET ALL USERS, input Sort nya hanya bisa diinputkan ASC atau DESC, lainnya error
         // query("page").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid"),
         query("limit").toInt().isDecimal().withMessage("Input must be a number").optional({nullable:true}),
         // query("search").isIn(["ASC", "DESC"]).withMessage("Sort type is invalid"),

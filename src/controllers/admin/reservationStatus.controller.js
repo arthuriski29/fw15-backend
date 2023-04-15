@@ -1,11 +1,11 @@
-const eventModel = require("../../models/events.model")
+const resStatusModel = require("../../models/reservationStatus.model")
 const errorHandler = require("../../helpers/errorHandler.helper")
 // const argon = require("argon2")
-const fileRemover = require("../../helpers/fileRemover.helper")
+// const fileRemover = require("../../helpers/fileRemover.helper")
 
-exports.getAllEvents = async(request, response) => {
+exports.getAllResStatus = async(request, response) => {
     try {
-        const data = await eventModel.findAll(
+        const data = await resStatusModel.findAll(
             request.query.page, 
             request.query.limit, 
             request.query.search,
@@ -13,7 +13,7 @@ exports.getAllEvents = async(request, response) => {
         if (data) {
             return response.json({
                 success: true,
-                message: "List of all events",
+                message: "List of all Reservation Status",
                 results: data
             })
         }
@@ -24,19 +24,19 @@ exports.getAllEvents = async(request, response) => {
     
 
 
-exports.getOneEvent = async(request, response) => {
-    const data = await eventModel.findOne(request.params.id)
+exports.getOneResStatus = async(request, response) => {
+    const data = await resStatusModel.findOne(request.params.id)
     if(data){
         return response.json({
             success: true,
-            message: "Detail Event user",
+            message: "Detail of the Reservation Status",
             results: data
         })
     }
     errorHandler(response, data)
 }
 
-exports.createEvent = async (request, response,) => {
+exports.createResStatus = async (request, response,) => {
     try {
         // if ((request.body.email == "" || request.body.password == "") ||(request.body.email == null || request.body.password == null)) {
         //     throw Error("empty_field")
@@ -52,22 +52,22 @@ exports.createEvent = async (request, response,) => {
             ...request.body
             // password: hash
         }
-        if(request.file){ //agar nama file yang diupload masuk ke dalam database
-            data.picture = request.file.filename
-        }
-        const events = await eventModel.insert(data)
+        // if(request.file){ //agar nama file yang diupload masuk ke dalam database
+        //     data.picture = request.file.filename
+        // }
+        const resStatus = await resStatusModel.insert(data)
         return response.json({
             success: true,
-            message: "Create user Event successfully",
-            results: events
+            message: "Created a Reservation Status successfully",
+            results: resStatus
         })
     } catch (error) {
-        fileRemover(request.file)
+        // fileRemover(request.file)
         return errorHandler(response, error)
     } 
 }
 
-exports.updateEvent = async (request, response) => { //catatan diDS kang irul pakai try()-catch() buat ini. tapi yang ini udah worked
+exports.updateResStatus = async (request, response) => { //catatan diDS kang irul pakai try()-catch() buat ini. tapi yang ini udah worked
     try{
         const data ={
             ...request.body
@@ -75,21 +75,20 @@ exports.updateEvent = async (request, response) => { //catatan diDS kang irul pa
         // if(request.body.password) {
         //     data.password = await argon.hash(request.body.password)
         // }
-        const events = await eventModel.update(request.params.id, data)
-        if(!events) {
-            throw Error("update_events_failed")
+        const resStatus = await resStatusModel.update(request.params.id, data)
+        if(!resStatus) {
+            throw Error("update_reservationStatus_failed")
         }
         return response.json({
             success: true,
-            message: "Update events successfully",
-            results: events
+            message: "Update a Reservation Status successfully",
+            results: resStatus
         })
     } catch(error){
-        fileRemover(request.file)
         errorHandler(response, error)
     } 
     //cara sendiri  
-    // const data = await eventModel.update(request.params.id, request.body)
+    // const data = await reservations.update(request.params.id, request.body)
     // if(data) {
     //     return response.json({
     //         success: true,
@@ -101,15 +100,15 @@ exports.updateEvent = async (request, response) => { //catatan diDS kang irul pa
     // errorHandler(response, data)
 }
 
-exports.deleteEvent = async (request, response) => {
+exports.deleteResStatus = async (request, response) => {
     try {
-        const data = await eventModel.destroy(request.params.id)
+        const data = await resStatusModel.destroy(request.params.id)
         if(!data) {
             return errorHandler(response, undefined)
         }
         return response.json({
             success: true,
-            message: "Delete Event successfully",
+            message: "Delete Reservations Status successfully",
             results: data
         })
       

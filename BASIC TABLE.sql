@@ -14,6 +14,7 @@ SELECT * FROM "users" WHERE "id"=325;
 
 
 
+
 CREATE TABLE "profile" (
   "id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   "picture" VARCHAR(255),
@@ -29,6 +30,7 @@ CREATE TABLE "profile" (
 );
 ALTER TABLE "profile" DROP COLUMN "phoneNumber";
 ALTER TABLE "profile" ADD COLUMN "phoneNumber" VARCHAR(255);
+ALTER TABLE "profile" ADD COLUMN "userId" INTEGER;
 
 
 CREATE TABLE "events" (
