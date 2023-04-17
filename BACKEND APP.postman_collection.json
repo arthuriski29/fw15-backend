@@ -1032,13 +1032,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/admin/profile",
+									"raw": "{{url}}/admin/profile/",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"admin",
-										"profile"
+										"profile",
+										""
 									]
 								}
 							},
@@ -1148,13 +1149,12 @@
 										},
 										{
 											"key": "phoneNumber",
-											"value": "0812211221",
-											"type": "default",
-											"disabled": true
+											"value": "083187654322",
+											"type": "default"
 										},
 										{
 											"key": "gender",
-											"value": "1",
+											"value": "0",
 											"type": "default"
 										},
 										{
@@ -1166,11 +1166,12 @@
 										{
 											"key": "nationality",
 											"value": "Argentina",
-											"type": "default"
+											"type": "default",
+											"disabled": true
 										},
 										{
 											"key": "birthDate",
-											"value": "1987-06-29",
+											"value": "1987-06-24",
 											"type": "default"
 										}
 									]
@@ -1878,6 +1879,42 @@
 							"path": [
 								"auth",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FORGOT",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/auth/forgot",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RESET",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/auth/reset",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"reset"
 							]
 						}
 					},
