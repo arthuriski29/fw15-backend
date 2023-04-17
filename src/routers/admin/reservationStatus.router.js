@@ -6,9 +6,9 @@ const validate = require("../../middlewares/validator.middleware")
 
 
 resStatusRouter.get("/", resStatusController.getAllResStatus)
-resStatusRouter.get("/:id", validate("idParams"), resStatusController.getAllResStatus)
-resStatusRouter.post("/", resStatusController.createResStatus)
-resStatusRouter.patch("/:id", validate("idParams"), resStatusController.updateResStatus)
-resStatusRouter.delete("/:id", validate("idParams"), resStatusController.deleteResStatus)
+resStatusRouter.get("/:id", validate("getOneResStatus"), resStatusController.getAllResStatus)
+resStatusRouter.post("/", validate("createResStatus"), resStatusController.createResStatus)
+resStatusRouter.patch("/:id", validate("updateResStatus"), resStatusController.updateResStatus)
+resStatusRouter.delete("/:id", validate("deleteResStatus"), resStatusController.deleteResStatus)
 
 module.exports = resStatusRouter
