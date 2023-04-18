@@ -53,7 +53,10 @@ exports.insert = async function(data){
 exports.update = async function(id, data){
     const query = `
     UPDATE "users" 
-    SET "username"=$2, "email"=$3, "password"=$4
+    SET 
+    "email"=COALESCE(NULLIF($2, '')), 
+    "password"=COALESCE(NULLIF($3, '')), 
+    "username"=COALESCE(NULLIF($4, ''))
     WHERE "id"=$1
     RETURNING *
     `  
