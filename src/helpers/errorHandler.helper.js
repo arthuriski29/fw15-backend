@@ -65,6 +65,12 @@ const errorHandler = (response, error) => {
             message: "Wrong email or password"
         })
     }
+    if(error?.message?.includes("no_user")) {
+        return response.status(400).json({
+            success: false, 
+            message: "Email haven't registered"
+        })
+    }
     if(error?.message?.includes("password_unmatch")) {
         return response.status(400).json({
             success: false, 
