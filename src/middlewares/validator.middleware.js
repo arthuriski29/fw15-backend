@@ -20,6 +20,16 @@ const phoneFormat = body("phoneNumber").isMobilePhone().withMessage("Enter the v
 const professionFormat = body("profession").isLength({min: 3, max: 20}).withMessage("Profession shouldn't be too long, too short, or empty")
 const nationalityFormat = body("nationality").isLength({min: 3, max: 20}).withMessage("Nationality invalid")
 const birthDateFormat = body("birthDate").isDate().withMessage("Birth Date Must be valid date input (ex:YYYY/MM/DD")
+
+const codeFormat = body("code").isInt().withMessage("Code must be a number").custom((value, {request}) => {
+    if(request.body.code.length === 6){
+        return value === request.body.code.length
+    }
+}).withMessage("Code is Invalid")
+const emailEmptyFormat = body("email").isEmpty().withMessage("Email cannot be empty")
+const confirmPasswordFormat = body("confirmPassword").custom((value, {request}) => {
+    return value === request.body.password
+}).withMessage("Confirm Password doesn't match")
 //For Formats
 
 
@@ -99,6 +109,12 @@ const rules = {
         professionFormat,
         nationalityFormat,
         birthDateFormat
+
+    ],
+    resetPassword: [
+        confirmPasswordFormat,
+        emailEmptyFormat,
+        codeFormat
 
     ],
     updateProfile: [
