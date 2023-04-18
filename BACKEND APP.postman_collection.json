@@ -1818,7 +1818,7 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "fazztrack@mail.com",
+									"value": "johncenacena@mail.com",
 									"type": "default"
 								},
 								{
@@ -1851,12 +1851,12 @@
 							"urlencoded": [
 								{
 									"key": "fullName",
-									"value": "Fazztrack",
+									"value": "John Cena",
 									"type": "default"
 								},
 								{
 									"key": "email",
-									"value": "fazztrack@mail.com",
+									"value": "johncenacena@mail.com",
 									"type": "default"
 								},
 								{
@@ -1885,18 +1885,28 @@
 					"response": []
 				},
 				{
-					"name": "FORGOT",
+					"name": "FORGOT PASSWORD",
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "johncenacena@mail.com",
+									"type": "default"
+								}
+							]
+						},
 						"url": {
-							"raw": "{{url}}/auth/forgot",
+							"raw": "{{url}}/auth/forgot-password",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"auth",
-								"forgot"
+								"forgot-password"
 							]
 						}
 					},
@@ -1907,14 +1917,39 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "default"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "1234",
+									"type": "default"
+								}
+							]
+						},
 						"url": {
-							"raw": "{{url}}/auth/reset",
+							"raw": "{{url}}/auth/reset-password",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"auth",
-								"reset"
+								"reset-password"
 							]
 						}
 					},
