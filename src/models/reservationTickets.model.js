@@ -11,7 +11,7 @@ exports.findAll = async function(page, limit, sort, sortBy){
 
     const query = `
     SELECT * FROM "${table}" 
-    WHERE "categoryId"
+    WHERE "categoryId"::TEXT LIKE $3
     ORDER BY "${sort}" ${sortBy} 
     LIMIT $1 OFFSET $2
     `
