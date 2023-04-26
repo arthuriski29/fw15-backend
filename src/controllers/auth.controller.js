@@ -58,9 +58,18 @@ exports.register = async (request, response) => {
 exports.forgotPassword = async (request, response) => {
     try {
         const {email} = request.body
+        // const {emailParams} = request.params
         const user = await userModel.findOneByEmail(email)
         if(!user){
             throw Error("no_user")
+        }
+        const deleteForgot = await forgotRequestModel.destroyByEmail(email)
+        if(deleteForgot){
+            return response.json({
+                success: true,
+                message: "Renewal Email Request for Forgot Password Accepted",
+                results: deleteForgot
+            })
         }
         const randomNumber = Math.random()
         const rounded = Math.round(randomNumber * 100000)
@@ -97,6 +106,7 @@ exports.resetPassword = async (request, response) => {
         if(!user){
             throw Error("no_forget_requested")
         }
+        await forgotRequestModel.destroy(find.id) //menghapus id dari tabel forgotRequestModel
         return response.json({
             success: true,
             message: "Reset password success"

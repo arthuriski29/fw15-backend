@@ -59,21 +59,36 @@ exports.update = async function(id, data){
     SET 
     "picture"=COALESCE(NULLIF($2, ''), "picture"), 
     "fullName"=COALESCE(NULLIF($3, ''), "fullName"), 
-    "phoneNumber"=$4,
-    "gender"=$5,
+    "phoneNumber"=COALESCE(NULLIF($4, ''), "phoneNumber"),
+    "gender"=COALESCE(NULLIF($5::BOOLEAN, NULL), "gender"),
     "profession"=COALESCE(NULLIF($6, ''), "profession"), 
     "nationality"=COALESCE(NULLIF($7, ''), "nationality"), 
-    "birthDate"=$8,
-    "userId"=$9
+    "birthDate"=COALESCE(NULLIF($8::DATE, NULL), "birthDate"),
+    "userId"=COALESCE(NULLIF($9::INTEGER, NULL), "userId")
     
     WHERE "id"=$1
-    RETURNING *,
-      CASE
-        WHEN "gender" THEN 'Male'
-        ElSE 'Female'
-      END "gender"
+    RETURNING *
     `
     const values = [id, data.picture, data.fullName, data.phoneNumber, data.gender, data.profession, data.nationality, data.birthDate, data.userId]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+exports.updateByUserId = async function(userId, data){
+    const query = `
+    UPDATE "${table}" 
+    SET 
+    "picture"=COALESCE(NULLIF($2, ''), "picture"), 
+    "fullName"=COALESCE(NULLIF($3, ''), "fullName"), 
+    "phoneNumber"=COALESCE(NULLIF($4, ''), "phoneNumber"),
+    "gender"=COALESCE(NULLIF($5::BOOLEAN, NULL), "gender"),
+    "profession"=COALESCE(NULLIF($6, ''), "profession"), 
+    "nationality"=COALESCE(NULLIF($7, ''), "nationality"), 
+    "birthDate"=COALESCE(NULLIF($8::DATE, NULL), "birthDate")
+    
+    WHERE "userId"=$1
+    RETURNING *
+    `
+    const values = [userId, data.picture, data.fullName, data.phoneNumber, data.gender, data.profession, data.nationality, data.birthDate]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }

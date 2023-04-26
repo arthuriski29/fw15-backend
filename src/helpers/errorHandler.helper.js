@@ -77,6 +77,12 @@ const errorHandler = (response, error) => {
             message: "Password and Confirm Password unmatched"
         })
     }
+    if(error?.message?.includes("no_forgots_requested")) {
+        return response.status(400).json({
+            success: false, 
+            message: "Cant' find Email or Code requested"
+        })
+    }
     if(error?.message?.includes("unauthorized")) {
         return response.status(401).json({
             success: false, 

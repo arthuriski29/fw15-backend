@@ -21,14 +21,18 @@ const professionFormat = body("profession").isLength({min: 3, max: 20}).withMess
 const nationalityFormat = body("nationality").isLength({min: 3, max: 20}).withMessage("Nationality invalid")
 const birthDateFormat = body("birthDate").isDate().withMessage("Birth Date Must be valid date input (ex:YYYY/MM/DD")
 
-const codeFormat = body("code").isInt().withMessage("Code must be a number").custom((value, {request}) => {
-    if(request.body.code.length === 6){
-        return value === request.body.code.length
-    }
-}).withMessage("Code is Invalid")
-const emailEmptyFormat = body("email").isEmpty().withMessage("Email cannot be empty")
-const confirmPasswordFormat = body("confirmPassword").custom((value, {request}) => {
-    return value === request.body.password
+// const codeFormat = 
+//     body("code").isInt().withMessage("Code must be a number")
+//         .isLength({min: 6, max: 6}).withMessage("Code must be 6 character")
+//         .custom((value, {request}) => {
+//             return value.length === request.body.code.length
+//         }).withMessage("Code is Invalid")
+
+const codeFormat = body("code").isLength(6).withMessage("Code must be 6 characters")
+
+// const emailEmptyFormat = body("email").isEmpty().withMessage("Email cannot be empty")
+const confirmPasswordFormat = body("confirmPassword").custom((value, {req}) => {
+    return value === req.body.password
 }).withMessage("Confirm Password doesn't match")
 //For Formats
 
@@ -52,6 +56,11 @@ const rules = {
         sortByParamsFormat
     ],
     getAllCities: [ //agar pada GET ALL USERS, input Sort nya hanya bisa diinputkan ASC atau DESC, lainnya error
+        limitParamsFormat,
+        sortParamsFormat,
+        sortByParamsFormat
+    ],
+    getAllProfiles: [ //agar pada GET ALL USERS, input Sort nya hanya bisa diinputkan ASC atau DESC, lainnya error
         limitParamsFormat,
         sortParamsFormat,
         sortByParamsFormat
@@ -112,9 +121,10 @@ const rules = {
 
     ],
     resetPassword: [
-        confirmPasswordFormat,
-        emailEmptyFormat,
-        codeFormat
+        codeFormat,
+        emailFormat,
+        strongPassword,
+        confirmPasswordFormat
 
     ],
     updateProfile: [
