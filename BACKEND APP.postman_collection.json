@@ -90,12 +90,12 @@
 									"urlencoded": [
 										{
 											"key": "username",
-											"value": "fa",
+											"value": "Undertaker",
 											"type": "default"
 										},
 										{
 											"key": "email",
-											"value": "fazztrackkeren@mail.com",
+											"value": "undertaker@mail.com",
 											"type": "default"
 										},
 										{
@@ -106,13 +106,19 @@
 									]
 								},
 								"url": {
-									"raw": "{{url}}/admin/users",
+									"raw": "{{url}}/admin/users?=",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"admin",
 										"users"
+									],
+									"query": [
+										{
+											"key": null,
+											"value": ""
+										}
 									]
 								}
 							},
@@ -128,17 +134,17 @@
 									"urlencoded": [
 										{
 											"key": "username",
-											"value": "fazz",
+											"value": "undertaker",
 											"type": "default"
 										},
 										{
 											"key": "email",
-											"value": "fazz@mail.com",
+											"value": "undertaker@mail.com",
 											"type": "default"
 										},
 										{
 											"key": "password",
-											"value": "!@#123Abc",
+											"value": "123!@#Abc",
 											"type": "default"
 										}
 									]
@@ -156,7 +162,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "5"
 										}
 									]
 								}
@@ -1028,9 +1034,16 @@
 					"item": [
 						{
 							"name": "GET ALL PROFILES",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
 								"url": {
 									"raw": "{{url}}/admin/profile/",
 									"host": [
@@ -1139,8 +1152,7 @@
 										{
 											"key": "picture",
 											"type": "file",
-											"src": [],
-											"disabled": true
+											"src": "/C:/Users/DELL/Pictures/finneas.jpg"
 										},
 										{
 											"key": "fullName",
@@ -1818,12 +1830,12 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "johncenacena@mail.com",
+									"value": "mhardy@mail.com",
 									"type": "default"
 								},
 								{
 									"key": "password",
-									"value": "1234",
+									"value": "123!@#Abc",
 									"type": "default"
 								}
 							]
@@ -1851,22 +1863,22 @@
 							"urlencoded": [
 								{
 									"key": "fullName",
-									"value": "John Cena",
+									"value": "Cristiano Ronaldo dos Santos Aveiro",
 									"type": "default"
 								},
 								{
 									"key": "email",
-									"value": "johncenacena@mail.com",
+									"value": "cristiano@mail.com",
 									"type": "default"
 								},
 								{
 									"key": "password",
-									"value": "1234",
+									"value": "123!@#Abc",
 									"type": "default"
 								},
 								{
 									"key": "confirmPassword",
-									"value": "1234",
+									"value": "123!@#Abc",
 									"type": "default"
 								}
 							]
@@ -1894,7 +1906,7 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "johncenacena@mail.com",
+									"value": "lionelmessi@mail.com",
 									"type": "default"
 								}
 							]
@@ -1921,23 +1933,23 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "code",
-									"value": "",
+									"key": "email",
+									"value": "lionelmessi@mail.com",
 									"type": "default"
 								},
 								{
-									"key": "email",
-									"value": "",
+									"key": "code",
+									"value": "679090",
 									"type": "default"
 								},
 								{
 									"key": "password",
-									"value": "1234",
+									"value": "123!@#Abcd",
 									"type": "default"
 								},
 								{
 									"key": "confirmPassword",
-									"value": "1234",
+									"value": "123!@#Abcd",
 									"type": "default"
 								}
 							]
@@ -1950,6 +1962,68 @@
 							"path": [
 								"auth",
 								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PROFILE",
+			"item": [
+				{
+					"name": "EDIT PROFILE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fullName",
+									"value": "Matthew Moore Hardy",
+									"type": "default"
+								},
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/C:/Users/DELL/Downloads/Matt_Hardy_Photo_Op_GalaxyCon_Raleigh_2021.jpg"
+								},
+								{
+									"key": "phoneNumber",
+									"value": "081234567890",
+									"type": "default"
+								},
+								{
+									"key": "gender",
+									"value": "0",
+									"type": "default"
+								},
+								{
+									"key": "profession",
+									"value": "Elite Wrestler",
+									"type": "default"
+								},
+								{
+									"key": "nationality",
+									"value": "USA",
+									"type": "default"
+								},
+								{
+									"key": "birthDate",
+									"value": "1974-09-23",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"profile"
 							]
 						}
 					},
