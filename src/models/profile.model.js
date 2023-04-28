@@ -31,6 +31,16 @@ exports.findOne = async function(id){
     return rows[0]
 }
 
+exports.findOneByUserId = async function(userId){
+    const query = `
+    SELECT * FROM "${table}"
+    WHERE userId=$1
+    `
+    const values = [userId]
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+
 exports.findOneByEmail = async function(email){
     const query = `
     SELECT * FROM "${table}"

@@ -102,15 +102,17 @@ exports.resetPassword = async (request, response) => {
         const data = {
             password: await argon.hash(password)
         }
+        const deleting = await forgotRequestModel.destroy(find.id) //menghapus id dari tabel forgotRequestModel
+        if(deleting){
+            return response.json({
+                success: true,
+                message: "Reset password success"
+            })
+        }
         const user = await userModel.update(selectedUser.id, data)
         if(!user){
             throw Error("no_forget_requested")
         }
-        await forgotRequestModel.destroy(find.id) //menghapus id dari tabel forgotRequestModel
-        return response.json({
-            success: true,
-            message: "Reset password success"
-        })
     }catch(error){
         return errorHandler(response, error)
     }
