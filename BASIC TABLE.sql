@@ -114,3 +114,32 @@ CREATE TABLE "wishlist" (
   "createdAt" TIMESTAMP DEFAULT NOW(),
   "updatedAt" TIMESTAMP DEFAULT NULL
 );
+
+CREATE TABLE "forgotRequest" (
+"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+"email" VARCHAR(255),
+"code" VARCHAR(255),
+"createdAt" TIMESTAMP DEFAULT NOW(),
+  "updatedAt" TIMESTAMP DEFAULT NULL
+);
+
+
+ALTER TABLE "profile" ADD COLUMN "userId" INTEGER;
+
+CREATE TABLE "forgotRequest" (
+"id" INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+"email" VARCHAR(255),
+"code" VARCHAR(255),
+"createdAt" TIMESTAMP DEFAULT NOW(),
+"updatedAt" TIMESTAMP DEFAULT NULL
+);
+
+SELECT * FROM "forgotRequest" WHERE "email"='undertaker@mail.com' AND "code"='692990';
+SELECT * FROM "forgotRequest" WHERE "email"='undertaker@mail.com';
+ DELETE FROM "forgotRequest" WHERE "id"='2' RETURNING *;
+ DELETE FROM "profile" WHERE "email"='undertaker@mail.com' RETURNING *;
+ DELETE FROM "profile" WHERE "id"='6' RETURNING *;
+ DELETE FROM "profile" WHERE "id"='3' RETURNING *;
+ DELETE FROM "users" WHERE "email"='lionelmessi@mail.com' RETURNING *;
+ DELETE FROM "users" WHERE "id"='2' RETURNING *;
+  SELECT * FROM "profile" WHERE "userId"=7;
