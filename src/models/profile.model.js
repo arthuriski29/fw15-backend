@@ -24,7 +24,7 @@ exports.findAll = async function(page, limit, search, sort, sortBy){
 exports.findOne = async function(id){
     const query = `
     SELECT * FROM "${table}"
-    WHERE id=$1
+    WHERE "id"=$1
     `
     const values = [id]
     const {rows} = await db.query(query, values)
@@ -34,7 +34,7 @@ exports.findOne = async function(id){
 exports.findOneByUserId = async function(userId){
     const query = `
     SELECT * FROM "${table}"
-    WHERE userId=$1
+    WHERE "userId"=$1
     `
     const values = [userId]
     const {rows} = await db.query(query, values)
@@ -44,7 +44,7 @@ exports.findOneByUserId = async function(userId){
 exports.findOneByEmail = async function(email){
     const query = `
     SELECT * FROM "${table}"
-    WHERE email=$1
+    WHERE "email"=$1
     `
     const values = [email]
     const {rows} = await db.query(query, values)

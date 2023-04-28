@@ -1,28 +1,28 @@
 const fileRemover = require("../helpers/fileRemover.helper")
 const profileModel = require("../models/profile.model")
 
-exports.updateProfile = async (request, response) => {
-    const {id} = request.user
+exports.updateProfile = async(req, res) => {
+    const {id} = req.user
     const user = await profileModel.findOneByUserId(id)
+    console.log(user)
     const data = {
-        ...request.body
+        ...req.body
     }
-    if(request.file){
+    if(req.file){
         if(user.picture){
+            console.log(user.picture)
             fileRemover({filename: user.picture})
         }
-    }
-    console.log(request.file)
-    if(request.file){
-        data.picture = request.file.filename
+        data.picture = req.file.filename
     }
     const profile = await profileModel.updateByUserId(id, data)
     if(!profile){
         throw Error("update_profile_failed")
     }
-    return response.json({
+    return res.json({
         success: true,
         message: "Profile updated",
         results: profile
+      
     })
 }
