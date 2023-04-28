@@ -31,8 +31,8 @@ const birthDateFormat = body("birthDate").isDate().withMessage("Birth Date Must 
 const codeFormat = body("code").isLength(6).withMessage("Code must be 6 characters")
 
 // const emailEmptyFormat = body("email").isEmpty().withMessage("Email cannot be empty")
-const confirmPasswordFormat = body("confirmPassword").custom((value, {req}) => {
-    return value === req.body.password
+const confirmPasswordFormat = body("confirmPassword").custom((value, {req: request}) => {
+    return value === request.body.password
 }).withMessage("Confirm Password doesn't match")
 //For Formats
 
