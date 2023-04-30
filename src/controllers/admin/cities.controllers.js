@@ -69,12 +69,20 @@ exports.createCity = async (request, response,) => {
 
 exports.updateCities = async (request, response) => { //catatan diDS kang irul pakai try()-catch() buat ini. tapi yang ini udah worked
     try{
+        const cityFind = await citiesModel.findOne(request.params.id)
         const data ={
             ...request.body
         }
         // if(request.body.password) {
         //     data.password = await argon.hash(request.body.password)
         // }
+        if(request.file){ //agar nama file yang diupload masuk ke dalam database
+            if(cityFind.picture){
+                console.log(cityFind.picture)
+                fileRemover({filename: cityFind.picture})
+            }
+            data.picture = request.file.filename
+        }
         const cities = await citiesModel.update(request.params.id, data)
         if(!cities) {
             throw Error("update_cities_failed")
@@ -85,7 +93,6 @@ exports.updateCities = async (request, response) => { //catatan diDS kang irul p
             results: cities
         })
     } catch(error){
-        fileRemover(request.file)
         errorHandler(response, error)
     } 
     //cara sendiri  
