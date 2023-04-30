@@ -274,7 +274,7 @@
 									"urlencoded": [
 										{
 											"key": "name",
-											"value": "Outdoor",
+											"value": "Fashion",
 											"type": "default"
 										}
 									]
@@ -335,7 +335,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "4"
 										}
 									]
 								}
@@ -401,11 +401,16 @@
 										{
 											"key": "picture",
 											"type": "file",
-											"src": "/C:/Users/DELL/Downloads/CityImg/bandung-gdg-sate.jpg"
+											"src": "/C:/Users/DELL/Downloads/CityImg/7. Semarang.png"
 										},
 										{
 											"key": "name",
-											"value": "Bandung",
+											"value": "Semarang",
+											"type": "default"
+										},
+										{
+											"key": "mapLocation",
+											"value": "https://goo.gl/maps/dJh6X3uRji2fHr7r5",
 											"type": "default"
 										}
 									]
@@ -428,6 +433,26 @@
 							"request": {
 								"method": "PATCH",
 								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/DELL/Downloads/CityImg/7. Semarang.png"
+										},
+										{
+											"key": "name",
+											"value": "Semarang",
+											"type": "default"
+										},
+										{
+											"key": "mapLocation",
+											"value": "https://goo.gl/maps/dJh6X3uRji2fHr7r5",
+											"type": "default"
+										}
+									]
+								},
 								"url": {
 									"raw": "{{url}}/admin/city/:id",
 									"host": [
@@ -441,7 +466,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": ""
+											"value": "7"
 										}
 									]
 								}
@@ -648,26 +673,26 @@
 										{
 											"key": "picture",
 											"type": "file",
-											"src": "/C:/Users/DELL/Downloads/EventsImg/3uvghvj8_coachella-afp_625x300_16_April_22.jpg"
+											"src": "/E:/Fazztrack Bootcamp/Bootcamp/Week 4/Tugas Week 4/fw15-dom/assets/images/Banner5.jpg"
 										},
 										{
 											"key": "title",
-											"value": "Music Festival",
+											"value": "Aquascaping Exceptional",
 											"type": "default"
 										},
 										{
 											"key": "date",
-											"value": "2023-08-08",
+											"value": "2023-11-19",
 											"type": "default"
 										},
 										{
 											"key": "cityId",
-											"value": "3",
+											"value": "5",
 											"type": "default"
 										},
 										{
 											"key": "descriptions",
-											"value": "Festival musik nasional 3 hari non-stop",
+											"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 											"type": "default"
 										}
 									]
@@ -695,28 +720,30 @@
 									"formdata": [
 										{
 											"key": "picture",
-											"value": "",
-											"type": "default"
+											"type": "file",
+											"src": "/E:/Fazztrack Bootcamp/Bootcamp/Week 4/Tugas Week 4/fw15-dom/assets/images/Banner3.jpg"
 										},
 										{
 											"key": "title",
-											"value": "",
+											"value": "Jimi Hendrix Experience",
 											"type": "default"
 										},
 										{
 											"key": "date",
-											"value": "",
+											"value": "2023-11-17",
 											"type": "default"
 										},
 										{
 											"key": "cityId",
 											"value": "",
-											"type": "default"
+											"type": "default",
+											"disabled": true
 										},
 										{
 											"key": "descriptions",
 											"value": "",
-											"type": "default"
+											"type": "default",
+											"disabled": true
 										}
 									]
 								},
@@ -733,7 +760,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": ""
+											"value": "1"
 										}
 									]
 								}
@@ -824,11 +851,11 @@
 										{
 											"key": "picture",
 											"type": "file",
-											"src": "/C:/Users/DELL/Downloads/PartnersImg/Universal-Logo-1997.png"
+											"src": "/C:/Users/DELL/Downloads/PartnersImg/6. HardRock.jpg"
 										},
 										{
 											"key": "name",
-											"value": "Universal Studio",
+											"value": "Hardrock Cafe",
 											"type": "default"
 										}
 									]
@@ -1152,7 +1179,8 @@
 										{
 											"key": "picture",
 											"type": "file",
-											"src": "/C:/Users/DELL/Pictures/finneas.jpg"
+											"src": "/C:/Users/DELL/Pictures/finneas.jpg",
+											"disabled": true
 										},
 										{
 											"key": "fullName",
@@ -1161,7 +1189,7 @@
 										},
 										{
 											"key": "phoneNumber",
-											"value": "083187654322",
+											"value": "081010101010",
 											"type": "default"
 										},
 										{
@@ -1201,7 +1229,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "8"
 										}
 									]
 								}
@@ -1970,64 +1998,251 @@
 			]
 		},
 		{
-			"name": "PROFILE",
+			"name": "MAIN BUSINESS FLOW",
 			"item": [
 				{
-					"name": "EDIT PROFILE",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "fullName",
-									"value": "Matthew Moore Hardy",
-									"type": "default"
+					"name": "PROFILE",
+					"item": [
+						{
+							"name": "EDIT PROFILE",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "fullName",
+											"value": "Matthew Moore Hardy",
+											"type": "default"
+										},
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/DELL/Downloads/Matt_Hardy_Photo_Op_GalaxyCon_Raleigh_2021.jpg"
+										},
+										{
+											"key": "phoneNumber",
+											"value": "081234567890",
+											"type": "default"
+										},
+										{
+											"key": "gender",
+											"value": "0",
+											"type": "default"
+										},
+										{
+											"key": "profession",
+											"value": "Elite Wrestler",
+											"type": "default"
+										},
+										{
+											"key": "nationality",
+											"value": "USA",
+											"type": "default"
+										},
+										{
+											"key": "birthDate",
+											"value": "1974-09-23",
+											"type": "default"
+										}
+									]
 								},
-								{
-									"key": "picture",
-									"type": "file",
-									"src": "/C:/Users/DELL/Downloads/Matt_Hardy_Photo_Op_GalaxyCon_Raleigh_2021.jpg"
-								},
-								{
-									"key": "phoneNumber",
-									"value": "081234567890",
-									"type": "default"
-								},
-								{
-									"key": "gender",
-									"value": "0",
-									"type": "default"
-								},
-								{
-									"key": "profession",
-									"value": "Elite Wrestler",
-									"type": "default"
-								},
-								{
-									"key": "nationality",
-									"value": "USA",
-									"type": "default"
-								},
-								{
-									"key": "birthDate",
-									"value": "1974-09-23",
-									"type": "default"
+								"url": {
+									"raw": "{{url}}/profile",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"profile"
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{url}}/profile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"profile"
-							]
+						{
+							"name": "GET PROFILE",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/profile",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "EVENTS",
+					"item": [
+						{
+							"name": "GET ALL EVENTS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/events?page=1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "search",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "location",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "category",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET DETAIL EVENTS",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/events/:id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"events",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CITIES",
+					"item": [
+						{
+							"name": "GET ALL CITIES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/cities",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"cities"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET DETAIL CITIES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/cities/:id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"cities",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CATEGORIES",
+					"item": [
+						{
+							"name": "GET ALL CATEGORIES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PARTNERS",
+					"item": [
+						{
+							"name": "GET ALL PARTNERS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/partners",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"partners"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
