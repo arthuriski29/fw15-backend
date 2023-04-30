@@ -9,7 +9,8 @@ exports.getAllEvents = async(request, response) => {
             request.query.page, 
             request.query.limit, 
             request.query.search,
-            request.query.sort, request.query.sortBy)
+            request.query.sort, request.query.sortBy
+        )
         if (data) {
             return response.json({
                 success: true,
@@ -72,9 +73,9 @@ exports.updateEvent = async (request, response) => { //catatan diDS kang irul pa
         const data ={
             ...request.body
         }
-        // if(request.body.password) {
-        //     data.password = await argon.hash(request.body.password)
-        // }
+        if(request.file){ //agar nama file yang diupload masuk ke dalam database
+            data.picture = request.file.filename
+        }
         const events = await eventModel.update(request.params.id, data)
         if(!events) {
             throw Error("update_events_failed")
