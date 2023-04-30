@@ -6,8 +6,12 @@ const fileRemover = (file) => {
         const filename = `uploads/${file.filename}`
         console.log(filename)
         fs.unlink(filename, (error)=> {
-            if(error){
-                throw Error(error.message)
+            try{
+                if(error){
+                    throw Error(error.message)
+                }
+            } catch(error){
+                console.log(error)
             }
         })
     }
