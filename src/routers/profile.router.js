@@ -4,7 +4,8 @@ const uploadMiddleware = require("../middlewares/upload.middleware")
 // const authMiddleware = require("../middlewares/auth.middleware")
 const profileController = require("../controllers/profile.controller")
 
-profileRouter.post("/", uploadMiddleware("picture"), profileController.updateProfile)
+profileRouter.get("/", profileController.getProfile)
+profileRouter.patch("/", uploadMiddleware("picture"), profileController.updateProfile)
 
 module.exports = profileRouter
 
