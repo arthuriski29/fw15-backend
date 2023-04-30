@@ -12,6 +12,9 @@ router.use("/auth", require("./auth.router"))
 router.use("/admin", authMiddleware, require("./admin/admin.router"))
 router.use("/profile", authMiddleware, require("./profile.router"))
 router.use("/events", authMiddleware, require("./events.router"))
+router.use("/cities", authMiddleware, require("./cities.router"))
+router.use("/categories", authMiddleware, require("./categories.router"))
+router.use("/partners", authMiddleware, require("./partners.router"))
 //tugas mockup
 
 router.use("*", (request, response) => {
