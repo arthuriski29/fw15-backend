@@ -4,7 +4,7 @@ const table = "events"
 
 exports.findAll = async function(page, limit, search, sort, sortBy){
     page = parseInt(page) || 1
-    limit = parseInt(limit) || 5
+    limit = parseInt(limit) || 7
     search = search || ""
     sort = sort || "id"
     sortBy = sortBy || "ASC"
@@ -26,6 +26,27 @@ exports.findOne = async function(id){
     SELECT * FROM "${table}"
     WHERE id=$1
     `
+    const values = [id]
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+
+exports.findOneEvents = async function(id){
+    const query = `
+  SELECT
+  "ci"."id",
+  "e"."title",
+  "ci"."name",
+  "e"."date",
+  "ci"."mapLocation"
+
+  FROM "${table}" "e"
+  JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
+  WHERE "e"."id"=$1
+  `
+    //Join dari tabel Users , dimana users.id nya = table profile.id
+    //tidak perlu * , ,karena ingin mengambil kolom tertentu saja (bukan semua kolom)
+
     const values = [id]
     const {rows} = await db.query(query, values)
     return rows[0]
@@ -59,8 +80,8 @@ exports.update = async function(id, data){
     SET 
     "picture"=COALESCE(NULLIF($2, ''), "picture"), 
     "title"=COALESCE(NULLIF($3, ''), "title"), 
-    "date"=$4,
-    "cityId"=$5,
+    "date"=COALESCE(NULLIF($4::DATE, NULL), "date"), 
+    "cityId"=COALESCE(NULLIF($5::INTEGER, NULL), "cityId"), 
     "descriptions"=COALESCE(NULLIF($6, ''), "descriptions")
     
     WHERE "id"=$1
