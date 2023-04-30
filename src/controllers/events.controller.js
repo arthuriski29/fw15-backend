@@ -36,3 +36,62 @@ exports.getOneEvent = async (req, res) => {
     }
     errorHandler(res, event)
 }
+
+// exports.createEvents = async(req, res) => {
+//     try {
+//         const {id} = req.user
+//         const events = await eventsModel.findOneByeventsId(id)
+//         console.log(events)
+//         const data = {
+//             ...req.body
+//         }
+//         if(req.file){
+//             if(events.picture){
+//                 console.log(events.picture)
+//                 fileRemover({filename: events.picture})
+//             }
+//             data.picture = req.file.filename
+//         }
+//         const profile = await eventsModel.updateByUserId(id, data)
+//         if(!profile){
+//             throw Error("update_profile_failed")
+//         }
+//         return res.json({
+//             success: true,
+//             message: "Profile updated",
+//             results: profile
+    
+//         })
+//     } catch (error) {
+//         return errorHandler(res, error)
+//     }
+// }
+// exports.updateEvents = async(req, res) => {
+//     try {
+//         const {id} = req.user
+//         const events = await eventsModel.findOneByeventsId(id)
+//         console.log(events)
+//         const data = {
+//             ...req.body
+//         }
+//         if(req.file){
+//             if(events.picture){
+//                 console.log(events.picture)
+//                 fileRemover({filename: events.picture})
+//             }
+//             data.picture = req.file.filename
+//         }
+//         const profile = await eventsModel.updateByUserId(id, data)
+//         if(!profile){
+//             throw Error("update_profile_failed")
+//         }
+//         return res.json({
+//             success: true,
+//             message: "Profile updated",
+//             results: profile
+    
+//         })
+//     } catch (error) {
+//         return errorHandler(res, error)
+//     }
+// }
