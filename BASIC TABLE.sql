@@ -143,3 +143,8 @@ SELECT * FROM "forgotRequest" WHERE "email"='undertaker@mail.com';
  DELETE FROM "users" WHERE "email"='lionelmessi@mail.com' RETURNING *;
  DELETE FROM "users" WHERE "id"='2' RETURNING *;
   SELECT * FROM "profile" WHERE "userId"=7;
+
+  ALTER TABLE "cities" ADD COLUMN "mapLocation" VARCHAR(255);
+
+  DROP TABLE "categories";
+  DROP TABLE "partners";
