@@ -145,6 +145,23 @@ SELECT * FROM "forgotRequest" WHERE "email"='undertaker@mail.com';
   SELECT * FROM "profile" WHERE "userId"=7;
 
   ALTER TABLE "cities" ADD COLUMN "mapLocation" VARCHAR(255);
+  ALTER TABLE "events" ADD COLUMN "createdBy" INTEGER;
 
   DROP TABLE "categories";
   DROP TABLE "partners";
+  INSERT INTO "eventCategories" ("eventId", "categoryId") VALUES
+(1,1), (1,6), (2,7), (3,3), (4,4), (5,5);
+  INSERT INTO "events" ("createdBy") VALUES
+(1,1), (1,6), (2,7), (3,3), (4,4), (5,5);
+
+
+INSERT INTO "reservationStatus" ("name") VALUES
+('PENDING'), ('PAID'), ('EXPIRED');
+INSERT INTO "reservationSections" ("name", "price") VALUES
+('SECTION REG, ROW 1', 15), ('SECTION VIP, ROW 2', 35), ('SECTION VVIP, ROW 3', 50);
+INSERT INTO "paymentMethod" ("name") VALUES
+('card'), ('bankTransfer'), ('retail'), ('eMoney');
+INSERT INTO "reservations" ("eventId", "userId", "status", "paymentMethodId") VALUES
+(1, 8, 1, 4), (6, 10, 2, 2), (2 ,11, 3, 3);
+INSERT INTO "reservationTicket" ("reservationId", "sectionId", "quantity") VALUES
+(1, 1, 5), (2, 3, 10), (3, 2, 9);

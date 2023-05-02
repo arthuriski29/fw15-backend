@@ -673,21 +673,21 @@
 										{
 											"key": "picture",
 											"type": "file",
-											"src": "/E:/Fazztrack Bootcamp/Bootcamp/Week 4/Tugas Week 4/fw15-dom/assets/images/Banner5.jpg"
+											"src": "/C:/Users/DELL/Downloads/EventsImg/6.  XGAMES- BMX MEGARAMP.jpg"
 										},
 										{
 											"key": "title",
-											"value": "Aquascaping Exceptional",
+											"value": "X-GAMES BMX Megaramp",
 											"type": "default"
 										},
 										{
 											"key": "date",
-											"value": "2023-11-19",
+											"value": "2023-11-22",
 											"type": "default"
 										},
 										{
 											"key": "cityId",
-											"value": "5",
+											"value": "1",
 											"type": "default"
 										},
 										{
@@ -1858,7 +1858,7 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "mhardy@mail.com",
+									"value": "lionelmessi@mail.com",
 									"type": "default"
 								},
 								{
@@ -1934,7 +1934,7 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "lionelmessi@mail.com",
+									"value": "fazz@mail.com",
 									"type": "default"
 								}
 							]
@@ -1962,22 +1962,22 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "lionelmessi@mail.com",
+									"value": "fazz@mail.com",
 									"type": "default"
 								},
 								{
 									"key": "code",
-									"value": "679090",
+									"value": "663600",
 									"type": "default"
 								},
 								{
 									"key": "password",
-									"value": "123!@#Abcd",
+									"value": "123!@#Abcdef",
 									"type": "default"
 								},
 								{
 									"key": "confirmPassword",
-									"value": "123!@#Abcd",
+									"value": "123!@#Abcdef",
 									"type": "default"
 								}
 							]
@@ -2083,12 +2083,130 @@
 					"name": "EVENTS",
 					"item": [
 						{
+							"name": "MANAGE EVENTS",
+							"item": [
+								{
+									"name": "CREATE EVENT",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "picture",
+													"value": "",
+													"type": "default",
+													"disabled": true
+												},
+												{
+													"key": "title",
+													"value": "Futsal Event",
+													"type": "default"
+												},
+												{
+													"key": "date",
+													"value": "",
+													"type": "default",
+													"disabled": true
+												},
+												{
+													"key": "cityId",
+													"value": "",
+													"type": "default",
+													"disabled": true
+												},
+												{
+													"key": "description",
+													"value": "",
+													"type": "default",
+													"disabled": true
+												},
+												{
+													"key": "createdBy",
+													"value": "",
+													"type": "default",
+													"disabled": true
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/events/manage",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"events",
+												"manage"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UPDATE EVENT",
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "picture",
+													"type": "file",
+													"src": []
+												},
+												{
+													"key": "title",
+													"value": "Futsal Competition",
+													"type": "default"
+												},
+												{
+													"key": "date",
+													"value": "2023-05-01",
+													"type": "default"
+												},
+												{
+													"key": "cityId",
+													"value": "6",
+													"type": "default"
+												},
+												{
+													"key": "descriptions",
+													"value": "Lorem Ipsum",
+													"type": "default"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/events/manage/:id",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"events",
+												"manage",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "6"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "GET ALL EVENTS",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/events?page=1",
+									"raw": "{{url}}/events",
 									"host": [
 										"{{url}}"
 									],
@@ -2098,21 +2216,37 @@
 									"query": [
 										{
 											"key": "page",
-											"value": "1"
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "",
+											"disabled": true
 										},
 										{
 											"key": "search",
+											"value": "Exper",
+											"disabled": true
+										},
+										{
+											"key": "sort",
 											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "sortBy",
+											"value": null,
 											"disabled": true
 										},
 										{
 											"key": "location",
-											"value": "",
+											"value": "Aceh",
 											"disabled": true
 										},
 										{
 											"key": "category",
-											"value": null,
+											"value": "Festival",
 											"disabled": true
 										}
 									]
@@ -2144,7 +2278,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "1"
+											"value": "6"
 										}
 									]
 								}
@@ -2208,12 +2342,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/admin/categories",
+									"raw": "{{url}}/categories",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
-										"admin",
 										"categories"
 									]
 								}
@@ -2237,6 +2370,205 @@
 									],
 									"path": [
 										"partners"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "WISHLIST",
+					"item": [
+						{
+							"name": "ADD TO WISHLIST",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "eventId",
+											"value": "1",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/wishlist",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wishlist"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET WISHLIST",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/wishlist/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"wishlist",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CHANGE PASSWORD",
+					"item": [
+						{
+							"name": "CHANGE PASSWORD",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "oldPassword",
+											"value": "123!@#Abc",
+											"type": "default"
+										},
+										{
+											"key": "newPassword",
+											"value": "123!@#AbcMessi",
+											"type": "default"
+										},
+										{
+											"key": "confirmPassword",
+											"value": "123!@#AbcMessi",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/changePassword",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"changePassword"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "RESERVATIONS",
+					"item": [
+						{
+							"name": "ADD RESERVATIONS",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "eventId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "userId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "status",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "paymentMethodId",
+											"value": "",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/reservations",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"reservations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ADD RESERVATION TICKET",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "reservationId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "sectionId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "quantity",
+											"value": "",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/admin/reservations",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin",
+										"reservations"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PAYMENTS",
+					"item": [
+						{
+							"name": "ADD PAYMENTS",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/payment",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"payment"
 									]
 								}
 							},
