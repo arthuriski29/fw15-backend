@@ -29,6 +29,25 @@ exports.findOne = async function(id){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+exports.findOneBy = async function(id){
+    const query = `
+    SELECT 
+    "e"."id" as "eventId",
+    "u"."id" as "userId",
+    "resStat"."id" as "reservationStatus",
+    "pay"."id" as "paymentMethodId"
+
+    FROM "reservations" "res"
+    JOIN "events" "e" ON "e"."id" = "res"."eventId"
+    JOIN "users" "u" ON "u"."id" = "res"."userId"
+    JOIN "reservationStatus" "resStat" ON "resStat"."id" = "res"."status"
+    JOIN "paymentMethod" "pay" ON "pay"."id" = "res"."paymentMethodId"
+    WHERE id=$1
+    `
+    const values = [id]
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
 
 exports.findOneByEmail = async function(email){
     const query = `
@@ -47,6 +66,15 @@ exports.insert = async function(data){
     VALUES ($1, $2, $3, $4) RETURNING *
     `  
     const values = [data.eventId, data.userId, data.status, data.paymentMethodId]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+exports.insertRes = async function(data, userId){
+    const query = `
+    INSERT INTO "${table}" ("eventId", "userId", "status", "paymentMethodId" ) 
+    VALUES ($1, $2, $3, $4) RETURNING *
+    `  
+    const values = [data.eventId, userId, data.status, data.paymentMethodId]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }

@@ -1,16 +1,19 @@
 const errorHandler = require("../helpers/errorHandler.helper")
 // const fileRemover = require("../helpers/fileRemover.helper")
 const eventsModel = require("../models/events.model")
+const eventsCatModel = require("../models/eventCategories.model")
 
 exports.getAllEvents = async (req, res) => {
     try {
         // const {id} = req.user
-        const events = await eventsModel.findAll(
+        const events = await eventsCatModel.findAllManage(
             req.query.page, 
             req.query.limit, 
             req.query.search,
             req.query.sort, 
-            req.query.sortBy
+            req.query.sortBy,
+            req.query.location,
+            req.query.category
         )
         if(!events){
             throw Error("events_not_found")

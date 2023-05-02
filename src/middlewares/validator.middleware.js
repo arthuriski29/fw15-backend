@@ -36,6 +36,10 @@ const confirmPasswordFormat = body("confirmPassword").custom((value, {req: reque
 }).withMessage("Confirm Password doesn't match")
 //For Formats
 
+const cityIdFormat = body("cityId").custom((value, {req: request}) => {
+    if((request >= 1) && (request <=7))  
+        return value
+}).withMessage("City does not found. cityId must be between 1-7 !!") 
 
 const rules = {
     authLogin: [
@@ -129,7 +133,14 @@ const rules = {
     ],
     updateProfile: [
         idParamsFormat
+    ],
+    getAllEvents: [
+        idParamsFormat
+    ],
+    createEvents: [
+        cityIdFormat
     ]
+    
     // createChangePassword:[
     //     body("oldPassword").isStrongPassword().withMessage("oldPassword must be strong"),
     //     body("currentPassword").isStrongPassword().withMessage("currentPassword must be strong"),

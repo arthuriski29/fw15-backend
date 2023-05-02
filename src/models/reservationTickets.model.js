@@ -50,6 +50,15 @@ exports.insert = async function(data){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+exports.insertRes = async function(reservationId, data){
+    const query = `
+    INSERT INTO "${table}" ("reservationId", "sectionid", "quantity") 
+    VALUES ($1, $2, $3) RETURNING *
+    `  
+    const values = [reservationId, data.sectionId, data.quantity]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
 
 exports.update = async function(id, data){
     const query = `

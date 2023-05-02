@@ -36,12 +36,14 @@ exports.findOneEvents = async function(id){
   SELECT
   "ci"."id",
   "e"."title",
-  "ci"."name",
+  "ci"."name" as "location",
   "e"."date",
-  "ci"."mapLocation"
+  "ci"."mapLocation",
+  "e"."createdBy"
 
   FROM "${table}" "e"
   JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
+  JOIN "users" "u" ON "u"."id" = "e"."createdBy"
   WHERE "e"."id"=$1
   `
     //Join dari tabel Users , dimana users.id nya = table profile.id
@@ -73,6 +75,17 @@ exports.insert = async function(data){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+
+exports.insertMyEvents = async function(createdBy, data){
+    const query = `
+    INSERT INTO "${table}" 
+    ("picture", "title", "date", "cityId", "descriptions", "createdBy") 
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *
+    `  
+    const values = [data.picture, data.title, data.date, data.cityId, data.descriptions, createdBy]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
   
 exports.update = async function(id, data){
     const query = `
@@ -88,6 +101,23 @@ exports.update = async function(id, data){
     RETURNING *
     `  
     const values = [id, data.picture, data.title, data.date, data.cityId, data.descriptions]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+exports.updateByUser = async function(userId, data){
+    const query = `
+    UPDATE "${table}" 
+    SET 
+    "picture"=COALESCE(NULLIF($2, ''), "picture"), 
+    "title"=COALESCE(NULLIF($3, ''), "title"), 
+    "date"=COALESCE(NULLIF($4::DATE, NULL), "date"), 
+    "cityId"=COALESCE(NULLIF($5::INTEGER, NULL), "cityId"), 
+    "descriptions"=COALESCE(NULLIF($6, ''), "descriptions")
+    
+    WHERE "createdBy"=$1
+    RETURNING *
+    `  
+    const values = [userId, data.picture, data.title, data.date, data.cityId, data.descriptions]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }

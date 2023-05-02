@@ -19,6 +19,25 @@ exports.findAll = async function(page, limit, sort, sortBy){
     const {rows} = await db.query(query, values)
     return rows
 }
+exports.findAllByUser = async function(userId){
+    const query = `
+    SELECT 
+    "e"."id", 
+    "e"."title" as "event", 
+    "ci"."name" as "location", 
+    "u"."email" as "addedBy",
+    "w"."userId"
+    
+    FROM "${table}" "w"
+    JOIN "events" "e" ON "e"."id" = "w"."eventId"
+    JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
+    JOIN "users" "u" ON "u"."id" = "w"."userId"
+    WHERE "w"."userId"=$1
+    `
+    const values = [userId]
+    const {rows} = await db.query(query, values)
+    return rows
+}
 
 exports.findOne = async function(id){
     const query = `
@@ -39,6 +58,21 @@ exports.findOneByEmail = async function(email){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+exports.findOneByUserId = async function(userId){
+    const query = `
+    SELECT
+    "w"."eventId",
+    "w"."userId"
+
+    
+    FROM "${table}" "w"
+    JOIN "events" "e" ON "e"."id" = "w"."eventId"
+    WHERE "w"."userId"=$1
+    `
+    const values = [userId]
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
  
 
 exports.insert = async function(data){
@@ -47,6 +81,16 @@ exports.insert = async function(data){
     VALUES ($1, $2) RETURNING *
     `  
     const values = [data.eventId, data.userId]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+
+exports.insertWish = async function(userId, data){
+    const query = `
+    INSERT INTO "${table}" ("eventId", "userId") 
+    VALUES ($1, $2) RETURNING *
+    `  
+    const values = [data.eventId, userId]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }

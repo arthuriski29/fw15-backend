@@ -65,6 +65,12 @@ const errorHandler = (response, error) => {
             message: "Wrong email or password"
         })
     }
+    if(error?.message?.includes("wrong_password")) {
+        return response.status(401).json({
+            success: false, 
+            message: "Wrong password"
+        })
+    }
     if(error?.message?.includes("no_user")) {
         return response.status(400).json({
             success: false, 
@@ -75,6 +81,48 @@ const errorHandler = (response, error) => {
         return response.status(400).json({
             success: false, 
             message: "Password and Confirm Password unmatched"
+        })
+    }
+    if(error?.message?.includes("event_invalid")) {
+        return response.status(400).json({
+            success: false, 
+            message: "eventId invalid, Event not found!!"
+        })
+    }
+    if(error?.message?.includes("eventId_not_found")) {
+        return response.status(400).json({
+            success: false, 
+            message: "Event Id not found!!"
+        })
+    }
+    if(error?.message?.includes("userId_not_found")) {
+        return response.status(400).json({
+            success: false, 
+            message: "User Id not found!!"
+        })
+    }
+    if(error?.message?.includes("status_not_found")) {
+        return response.status(400).json({
+            success: false, 
+            message: "Status not found!!"
+        })
+    }
+    if(error?.message?.includes("paymentMethodId_not_found")) {
+        return response.status(400).json({
+            success: false, 
+            message: "Payment Method Id not found!!"
+        })
+    }
+    if(error?.message?.includes("sectionId_not_found")) {
+        return response.status(400).json({
+            success: false, 
+            message: "Section Id not found!!"
+        })
+    }
+    if(error?.message?.includes("reservationId_not_found")) {
+        return response.status(400).json({
+            success: false, 
+            message: "Reservation Id not found!!"
         })
     }
     if(error?.message?.includes("no_forgots_requested")) {

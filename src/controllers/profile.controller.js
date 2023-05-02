@@ -1,6 +1,7 @@
 const errorHandler = require("../helpers/errorHandler.helper")
 const fileRemover = require("../helpers/fileRemover.helper")
 const profileModel = require("../models/profile.model")
+const userModel = require("../models/users.model")
 
 exports.updateProfile = async(req, res) => {
     try {
@@ -20,6 +21,9 @@ exports.updateProfile = async(req, res) => {
         const profile = await profileModel.updateByUserId(id, data)
         if(!profile){
             throw Error("update_profile_failed")
+        }
+        if(data.email){
+            await userModel.update(id, data)
         }
         return res.json({
             success: true,
