@@ -5,5 +5,6 @@ const wishlistController = require("../controllers/wishlist.controller")
 
 wishlistRouter.get("/", wishlistController.getWish)
 wishlistRouter.post("/", wishlistController.createWish)
+wishlistRouter.post("/check", wishlistController.checkWish)
 
 module.exports = wishlistRouter

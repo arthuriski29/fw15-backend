@@ -73,6 +73,21 @@ exports.findOneByUserId = async function(userId){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+exports.findByUserandEvent = async function(userId, eventId){
+    const query = `
+    SELECT
+    "w"."eventId",
+    "w"."userId"
+
+    
+    FROM "${table}" "w"
+    JOIN "events" "e" ON "e"."id" = "w"."eventId"
+    WHERE "w"."userId"=$1 AND "w"."eventId"=$2
+    `
+    const values = [userId, eventId]
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
  
 
 exports.insert = async function(data){
@@ -85,12 +100,12 @@ exports.insert = async function(data){
     return rows[0]
 }
 
-exports.insertWish = async function(userId, data){
+exports.insertWish = async function(userId, eventId){
     const query = `
-    INSERT INTO "${table}" ("eventId", "userId") 
+    INSERT INTO "${table}" ("userId", "eventId") 
     VALUES ($1, $2) RETURNING *
     `  
-    const values = [data.eventId, userId]   
+    const values = [userId, eventId]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }
@@ -117,6 +132,16 @@ exports.destroy = async function(id){
     RETURNING *
     `  
     const values = [id]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+exports.destroyUser = async function(userId, eventId){
+    const query = `
+    DELETE FROM "${table}" 
+    WHERE "userId"=$1 AND "eventId"=$2
+    RETURNING *
+    `  
+    const values = [userId, eventId]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }
