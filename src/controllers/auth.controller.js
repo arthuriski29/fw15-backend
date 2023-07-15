@@ -10,10 +10,14 @@ exports.login = async (request, response) => {
     try {
         const {email, password} = request.body
         const user = await userModel.findOneByEmail(email)
+        console.log(user)
         if(!user){
             throw Error("wrong_credentials")
         }
         const verify = await argon.verify(user.password, password)
+        console.log(verify)
+        console.log(password)   
+        console.log(user.password)   
         if(!verify){
             throw Error("wrong_credentials")
         }
@@ -104,15 +108,16 @@ exports.resetPassword = async (request, response) => {
         }
         const deleting = await forgotRequestModel.destroy(find.id) //menghapus id dari tabel forgotRequestModel
         if(deleting){
+            const user = await userModel.update(selectedUser.id, data)
+            if(!user){
+                throw Error("no_forget_requested")
+            }
             return response.json({
                 success: true,
                 message: "Reset password success"
             })
         }
-        const user = await userModel.update(selectedUser.id, data)
-        if(!user){
-            throw Error("no_forget_requested")
-        }
+        
     }catch(error){
         return errorHandler(response, error)
     }
