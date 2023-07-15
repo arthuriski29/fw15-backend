@@ -18,7 +18,7 @@ exports.createReservation = async (req, res) => {
         const data ={
             ...req.body
         }
-        const payment = await paymentMethod.insertRes(id, data)
+        const payment = await paymentMethod.insertReservation(id, data)
         if(!payment) {
             throw Error("no_event_created")
         }
