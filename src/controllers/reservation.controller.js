@@ -1,77 +1,61 @@
 const errorHandler = require("../helpers/errorHandler.helper")
-const reservationsModel = require("../models/reservations.model")
+const rsvModel = require("../models/reservations.model")
+const ticketModel = require("../models/reservationTickets.model")
 const eventModel = require("../models/events.model")
-const userModel = require("../models/users.model")
-const reservationStatusModel = require("../models/reservationStatus.model")
-const paymentMethodModel = require("../models/paymentMethod.model")
-const reservationSectionsModel = require("../models/reservationSections.model")
-const reservationTicketsModel = require("../models/reservationTickets.model")
+const sectionModel = require("../models/reservationSections.model")
 
 exports.createReservation = async (req, res) => {
-    try {
-        const {id} = req.user
-        const {eventId, userId, status, paymentMethodId} = req.body
-        const event = await eventModel.findOne(eventId)
-        const user = await userModel.findOne(userId)
-        const stat = await reservationStatusModel.findOne(status)
-        const paymentMethod = await paymentMethodModel.findOne(paymentMethodId)
-
-        if(!event){
-            throw Error("eventId_not_found")
-        }
-        if(!user){
-            throw Error("userId_not_found")
-        }
-        if(!stat){
-            throw Error("status_not_found")
-        }
-        if(!paymentMethod){
-            throw Error("paymentMethodId_not_found")
-        }
-        const data ={
-            ...req.body
-        }
-        const reservations = await reservationsModel.insertRes(id, data)
-        if(!reservations) {
-            throw Error("no_event_created")
-        }
-        return res.json({
-            success: true,
-            message: "Create Events successfully",
-            results: reservations
-        })
-    } catch (error) {
-        return errorHandler(res, error)
+    const {id: userId} = req.user
+    const rsvData = {
+        ...req.body,
+        userId,
+        status: 1
     }
+    const rsv = await rsvModel.insert(rsvData)
+    const ticketRsv = {
+        ...req.body,
+        reservationId: rsv.id
+    }
+    const section = await sectionModel.findOne(req.body.sectionId)
+
+    await ticketModel.insert(ticketRsv)
+    return res.json({
+        success: true,
+        message: "Create Reservation Success",
+        results:{
+            id: rsv.id,
+            events: await eventModel.findOne(req.body.eventId),
+            sectionName: section.name,
+            quantity: req.body.quantity,
+            pricePerTicket: `Rp ${section.price},-`,
+            totalPrice: `Rp ${((req.body.quantity) * section.price)},-`
+        }
+    })
 }
-
-exports.createReservationTicket = async (req, res) => {
+exports.makeTicket = async (req, res) => {
     try {
-        // const {id} = req.user
-        const {reservationId, sectionId} = req.body
-        const reservation = await reservationsModel.findOne(reservationId)
-        const section = await reservationSectionsModel.findOne(sectionId)
-      
+        const { id } = req.user
 
-        if(!reservation){
-            throw Error("reservationId_not_found")
+        if (!id) {
+            throw Error("Unauthorized")
         }
-        if(!section){
-            throw Error("sectionId_not_found")
+
+        const data = { ...req.body }
+
+        const reservation = await rsvModel.findByUserId(id)
+
+        if (!reservation) {
+            throw Error("Reservation is not found")
         }
-        const data ={
-            ...req.body
-        }
-        const resTicket = await reservationTicketsModel.insertRes(reservationId, data)
-        if(!resTicket) {
-            throw Error("no_resTicket_created")
-        }
+
+        const ticket = await ticketModel.insert(data)
+
         return res.json({
             success: true,
-            message: "Create Reservation Ticket successfully",
-            results: resTicket
+            message: "Add ticket successfully",
+            results: ticket,
         })
-    } catch (error) {
-        return errorHandler(res, error)
+    } catch (err) {
+        return errorHandler(res, err)
     }
 }

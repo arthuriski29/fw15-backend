@@ -5,5 +5,6 @@ const reservationsController = require("../controllers/reservation.controller")
 
 // reservationsRouter.get("/", reservationsController.getWish)
 reservationsRouter.post("/", reservationsController.createReservation)
+reservationsRouter.post("/ticket",  reservationsController.makeTicket)
 
 module.exports = reservationsRouter
