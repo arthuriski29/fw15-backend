@@ -53,7 +53,7 @@ exports.createCity = async (request, response,) => {
             // password: hash
         }
         if(request.file){ //agar nama file yang diupload masuk ke dalam database
-            data.picture = request.file.filename
+            data.picture = request.file.path
         }
         const cities = await citiesModel.insert(data)
         return response.json({
@@ -81,7 +81,7 @@ exports.updateCities = async (request, response) => { //catatan diDS kang irul p
                 console.log(cityFind.picture)
                 fileRemover({filename: cityFind.picture})
             }
-            data.picture = request.file.filename
+            data.picture = request.file.path
         }
         const cities = await citiesModel.update(request.params.id, data)
         if(!cities) {

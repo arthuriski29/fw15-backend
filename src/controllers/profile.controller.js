@@ -16,19 +16,28 @@ exports.updateProfile = async(req, res) => {
                 console.log(user.picture)
                 fileRemover({filename: user.picture})
             }
-            data.picture = req.file.filename
+            // data.picture = req.file.filename
+            data.picture = req.file.path
         }
         const profile = await profileModel.updateByUserId(id, data)
         if(!profile){
             throw Error("update_profile_failed")
         }
+        let updatedUser
         if(data.email){
-            await userModel.update(id, data)
+            updatedUser = await userModel.update(id, data)
+        }else{
+            updatedUser = await userModel.findOne(id)
+        }
+        const results = {
+            ...profile,
+            email: updatedUser?.email,
+            username: updatedUser?.username
         }
         return res.json({
             success: true,
             message: "Profile updated",
-            results: profile
+            results
       
         })
     } catch (error) {
