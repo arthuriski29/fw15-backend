@@ -11,15 +11,17 @@ router.get("/", (request, response) => {
 router.use("/auth", require("./auth.router"))
 router.use("/admin", authMiddleware, require("./admin/admin.router"))
 router.use("/profile", authMiddleware, require("./profile.router"))
-router.use("/events", authMiddleware, require("./events.router"))
+router.use("/events", require("./events.router"))
 // router.use("/eventsCategories", authMiddleware, require("./eventsCategories.router"))
-router.use("/cities", authMiddleware, require("./cities.router"))
-router.use("/categories", authMiddleware, require("./categories.router"))
-router.use("/partners", authMiddleware, require("./partners.router"))
+router.use("/cities", require("./cities.router"))
+router.use("/categories", require("./categories.router"))
+router.use("/partners", require("./partners.router"))
 router.use("/wishlist", authMiddleware, require("./wishlist.router"))
 router.use("/changePassword", authMiddleware, require("./changePassword.router"))
 router.use("/reservations", authMiddleware, require("./reservations.router"))
 router.use("/payment", authMiddleware, require("./payment.router"))
+router.use("/section", authMiddleware, require("./section.router"))
+router.use("/history", authMiddleware, require("./history.router"))
 //tugas mockup
 
 router.use("*", (request, response) => {
