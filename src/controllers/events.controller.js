@@ -1,18 +1,18 @@
 const errorHandler = require("../helpers/errorHandler.helper")
 // const fileRemover = require("../helpers/fileRemover.helper")
 const eventsModel = require("../models/events.model")
-const eventsCatModel = require("../models/eventCategories.model")
+// const eventsCatModel = require("../models/eventCategories.model")
 
 exports.getAllEvents = async (req, res) => {
     try {
         // const {id} = req.user
-        const events = await eventsCatModel.findAllManage(
+        const events = await eventsModel.findAllManage(
             req.query.page, 
             req.query.limit, 
             req.query.search,
             req.query.sort, 
             req.query.sortBy,
-            req.query.location,
+            req.query.city,
             req.query.category
         )
         if(!events){

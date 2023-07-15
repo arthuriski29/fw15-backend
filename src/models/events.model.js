@@ -4,7 +4,7 @@ const table = "events"
 
 exports.findAll = async function(page, limit, search, sort, sortBy){
     page = parseInt(page) || 1
-    limit = parseInt(limit) || 7
+    limit = parseInt(limit) || 8
     search = search || ""
     sort = sort || "id"
     sortBy = sortBy || "ASC"
@@ -17,6 +17,75 @@ exports.findAll = async function(page, limit, search, sort, sortBy){
     LIMIT $1 OFFSET $2
     `
     const values = [limit, offset, `%${search}%`]
+    const {rows} = await db.query(query, values)
+    return rows
+}
+exports.findAllManage = async function(page, limit, search, sort, sortBy, city, category){
+    page = parseInt(page) || 1
+    limit = parseInt(limit) || 8
+    search = search || ""
+    city = city || ""
+    category = category || ""
+    sort = sort || "id"
+    sortBy = sortBy || "ASC"
+    const offset = (page - 1) * limit  
+    const query = `
+    SELECT
+    "e"."id", 
+    "e"."picture", 
+    "e"."title" as "event",
+    "e"."date",
+    "ci"."name" as "city",
+    STRING_AGG("c"."name", ',') as "category",
+    "e"."descriptions",
+    "u"."email" as "createdBy",
+    "e"."createdAt",
+    "e"."updatedAt"
+    FROM "${table}" "e"
+    JOIN "eventCategories" "ec" ON "e"."id" = "ec"."eventId"
+    JOIN "categories" "c" ON "c"."id" = "ec"."categoryId"
+    JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
+    JOIN "users" "u" ON "u"."id" = "e"."createdBy"
+    WHERE "e"."title" LIKE $3 AND "ci"."name" LIKE $4 AND "c"."name" LIKE $5 
+    GROUP BY "e"."id", "ci"."name", "u"."email"
+    ORDER BY "${sort}" ${sortBy} 
+    LIMIT $1 OFFSET $2
+    `
+    const values = [limit, offset, `%${search}%`, `%${city}%`, `%${category}%` ]
+    const {rows} = await db.query(query, values)
+    return rows
+}
+exports.findAllUserMade = async function(id, page, limit, search, sort, sortBy, location, category){
+    page = parseInt(page) || 1
+    limit = parseInt(limit) || 8
+    search = search || ""
+    location = location || ""
+    category = category || ""
+    sort = sort || "id"
+    sortBy = sortBy || "ASC"
+    const offset = (page - 1) * limit  
+    const query = `
+    SELECT
+    "e"."id", 
+    "e"."picture", 
+    "e"."title" as "event",
+    "e"."date",
+    "ci"."name" as "location",
+    STRING_AGG("c"."name", ',') as "category",
+    "e"."descriptions",
+    "e"."createdBy",
+    "e"."createdAt",
+    "e"."updatedAt"
+    FROM "${table}" "e"
+    JOIN "eventCategories" "ec" ON "e"."id" = "ec"."eventId"
+    JOIN "categories" "c" ON "c"."id" = "ec"."categoryId"
+    JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
+    WHERE "e"."createdBy"=$1 AND "e"."title" LIKE $4 AND "ci"."name" LIKE $5 AND "c"."name" LIKE $6 
+    GROUP BY "e"."id", "ci"."name"
+    ORDER BY "${sort}" ${sortBy} 
+    LIMIT $2 OFFSET $3
+    `
+    const values = [id, limit, offset, `%${search}%`, `%${location}%`, `%${category}%` ]
     const {rows} = await db.query(query, values)
     return rows
 }
@@ -34,10 +103,13 @@ exports.findOne = async function(id){
 exports.findOneEvents = async function(id){
     const query = `
   SELECT
-  "ci"."id",
-  "e"."title",
+  "e"."id" as "eventId",
+  "e"."picture",
+  "e"."title" as "event",
   "ci"."name" as "location",
   "e"."date",
+  "ci"."id" as "cityId",
+  "e"."descriptions" as "descriptions",
   "ci"."mapLocation",
   "e"."createdBy"
 
@@ -60,6 +132,28 @@ exports.findOneByEmail = async function(email){
     WHERE email=$1
     `
     const values = [email]
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+exports.findOneByUserId = async function(createdBy){
+    const query = `
+    SELECT
+    "e"."id" as "eventId",
+    "e"."title" as "event",
+    "ci"."name" as "location",
+    "cat"."name" as "category",
+    "e"."date",
+    "ci"."id" as "cityId",
+    "ci"."mapLocation",
+    "e"."createdBy"
+    FROM "${table}" "e"
+    JOIN "eventCategories" "ec" ON "e"."id" = "ec"."eventId"
+    JOIN "categories" "cat" ON "cat"."id" = "ec"."categoryId"
+    JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
+    JOIN "users" "u" ON "u"."id" = "e"."createdBy"
+    WHERE createdBy=$1
+    `
+    const values = [createdBy]
     const {rows} = await db.query(query, values)
     return rows[0]
 }
@@ -129,6 +223,16 @@ exports.destroy = async function(id){
     RETURNING *
     `  
     const values = [id]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+exports.destroyByUser = async function(createdBy, id){
+    const query = `
+    DELETE FROM "${table}" 
+    WHERE "createdBy"=$1 AND "id"=$2
+    RETURNING *
+    `  
+    const values = [createdBy, id]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }

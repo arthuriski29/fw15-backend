@@ -9,7 +9,10 @@ exports.getAllEvents = async(request, response) => {
             request.query.page, 
             request.query.limit, 
             request.query.search,
-            request.query.sort, request.query.sortBy
+            request.query.sort, 
+            request.query.sortBy,
+            request.query.city,
+            request.query.category
         )
         if (data) {
             return response.json({

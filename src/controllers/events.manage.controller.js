@@ -14,16 +14,21 @@ exports.createEvents = async(req, res) => {
         }
 
         if(req.file){ 
-            data.picture = req.file.filename
+            data.picture = req.file.path
         }
         const create = await eventsModel.insertMyEvents(id, data)
+        const eventId =  create.id
+        const intoCategory = await eventCategoriesModel.insertCategory(eventId, data)
+        if(!intoCategory) {
+            throw Error("no_category_event")
+        }
         if(!create) {
             throw Error("no_event_created")
         }
         return res.json({
             success: true,
             message: "Create Events successfully",
-            results: create
+            results: [create, intoCategory]
         })
     } catch (error) {
         return errorHandler(res, error)
@@ -34,6 +39,7 @@ exports.createEvents = async(req, res) => {
 exports.updateEvents = async(req, res) => {
     try {
         const {id} = req.user
+        console.log(id)
         // const user = await profileModel.findOneByUserId(id)
         const event = await eventCategoriesModel.findOneByUserId(id)
         console.log(event)
@@ -45,7 +51,7 @@ exports.updateEvents = async(req, res) => {
                 console.log(event.picture)
                 fileRemover({filename: event.picture})
             }
-            data.picture = req.file.filename
+            data.picture = req.file.path
         }
         const create = await eventsModel.updateByUser(id, data)
         if(!create){
@@ -59,6 +65,67 @@ exports.updateEvents = async(req, res) => {
             message: "Event updated",
             results: create
       
+        })
+    } catch (error) {
+        return errorHandler(res, error)
+    }
+}
+exports.deleteEvents = async(req, res) => {
+    try {
+        const {id} = req.user
+        // const user = await profileModel.findOneByUserId(id)
+        // const event = await eventsModel.findOneByUserId(id)
+        // console.log(event)
+        const data = {
+            ...req.params
+        }
+        
+        const destroyEvent = await eventsModel.destroyByUser(id, data.id)
+        console.log({id})
+        
+        if(!destroyEvent){
+            throw Error("delete_event_failed")
+        }
+        if(destroyEvent){
+            const destroyCategory = await eventCategoriesModel.destroyByUser(data.id)
+            if(!destroyCategory){
+                throw Error("delete_eventCat_failed")
+            }
+        }
+        // if(data.email){
+        //     await userModel.update(id, data)
+        // }
+        return res.json({
+            success: true,
+            message: "Event deleted succesfully",
+            results: destroyEvent
+      
+        })
+    } catch (error) {
+        return errorHandler(res, error)
+    }
+}
+
+exports.getAllUserEvents = async (req, res) => {
+    try {
+        const {id} = req.user
+        const events = await eventsModel.findAllUserMade(
+            id,
+            req.query.page, 
+            req.query.limit, 
+            req.query.search,
+            req.query.sort, 
+            req.query.sortBy,
+            req.query.location,
+            req.query.category
+        )
+        if(!events){
+            throw Error("events_not_found")
+        }
+        return res.json({
+            success: true,
+            message: "List of All Events",
+            results: events
         })
     } catch (error) {
         return errorHandler(res, error)
