@@ -4,7 +4,7 @@ const table = "partners"
 
 exports.findAll = async function(page, limit, search, sort, sortBy){
     page = parseInt(page) || 1
-    limit = parseInt(limit) || 7
+    limit = parseInt(limit) || 6
     search = search || ""
     sort = sort || "id"
     sortBy = sortBy || "ASC"
