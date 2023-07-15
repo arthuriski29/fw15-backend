@@ -77,6 +77,26 @@ exports.findOneByUserId = async function(userId){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+
+exports.insertCategory = async function(eventId, data){
+    const query = `
+    INSERT INTO "eventCategories" ("eventId", "categoryId") 
+    VALUES ($1, $2) RETURNING *
+    `  
+    const values = [eventId, data.category]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+exports.destroyByUser = async function(eventId){
+    const query = `
+    DELETE FROM "${table}" 
+    WHERE "eventId"=$1
+    RETURNING *
+    `  
+    const values = [eventId]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
 // exports.findOneByuserId = async function(userId){
 //     const query = `
 //     SELECT 
