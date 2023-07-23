@@ -41,7 +41,7 @@ exports.makeTicket = async (req, res) => {
         }
 
         const data = { ...req.body }
-
+        console.log(data)
         const reservation = await rsvModel.findByUserId(id)
 
         if (!reservation) {
@@ -55,6 +55,29 @@ exports.makeTicket = async (req, res) => {
             message: "Add ticket successfully",
             results: ticket,
         })
+    } catch (err) {
+        return errorHandler(res, err)
+    }
+}
+
+exports.getUserReservation = async (req, res) => {
+    try {
+        const { id } = req.user
+
+        if (!id) {
+            throw Error("Unauthorized")
+        }
+        const findResUser = await rsvModel.findAllById(id)
+        if (!findResUser) {
+            throw Error("Reservation is not found")
+        }
+        return res.json({
+            success: true,
+            message: "List of User Reservation",
+            results: findResUser
+
+        })
+    
     } catch (err) {
         return errorHandler(res, err)
     }

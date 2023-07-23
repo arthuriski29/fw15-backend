@@ -3,7 +3,7 @@ const reservationsRouter = require("express").Router()
 // const authMiddleware = require("../middlewares/auth.middleware")
 const reservationsController = require("../controllers/reservation.controller")
 
-// reservationsRouter.get("/", reservationsController.getWish)
+reservationsRouter.get("/", reservationsController.getUserReservation)
 reservationsRouter.post("/", reservationsController.createReservation)
 reservationsRouter.post("/ticket",  reservationsController.makeTicket)
 

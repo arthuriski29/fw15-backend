@@ -146,6 +146,21 @@ exports.findByUserId = async function(userId){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+exports.findAllById = async function(userId){
+    const query = `
+    SELECT
+    "r"."id" as "reservationId" ,
+    "e"."title", 
+    "e"."cityId" as "cityId",
+    "e"."date"  
+    FROM "${table}" "r"
+    JOIN "events" "e" ON "e"."id" = "r"."eventId"
+    WHERE "userId"=$1
+    `  
+    const values = [userId]   
+    const {rows} = await db.query(query, values)
+    return rows
+}
 exports.insertReservation = async function(data, userId){
     const query = `
     INSERT INTO "${table}" ("eventId", "userId", "status", "paymentMethodId" ) 

@@ -76,8 +76,8 @@ exports.findOneByUserId = async function(userId){
 exports.findByUserandEvent = async function(userId, eventId){
     const query = `
     SELECT
-    "w"."eventId",
-    "w"."userId"
+    "w"."userId",
+    "w"."eventId"
 
     
     FROM "${table}" "w"
