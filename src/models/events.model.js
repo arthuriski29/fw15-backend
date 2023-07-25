@@ -23,7 +23,7 @@ exports.findAll = async function(page, limit, search, sort, sortBy){
 exports.findAllManage = async function(page, limit, search, sort, sortBy, city, category){
     page = parseInt(page) || 1
     limit = parseInt(limit) || 8
-    search = search || ""
+    search = search ? search.toLowerCase() : ""
     city = city || ""
     category = category || ""
     sort = sort || "id"
@@ -46,12 +46,13 @@ exports.findAllManage = async function(page, limit, search, sort, sortBy, city, 
     JOIN "categories" "c" ON "c"."id" = "ec"."categoryId"
     JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
     JOIN "users" "u" ON "u"."id" = "e"."createdBy"
-    WHERE "e"."title" LIKE $3 AND "ci"."name" LIKE $4 AND "c"."name" LIKE $5 
+    WHERE LOWER("e"."title") LIKE $3 AND "ci"."name" LIKE $4 AND "c"."name" LIKE $5 
     GROUP BY "e"."id", "ci"."name", "u"."email"
     ORDER BY "${sort}" ${sortBy} 
     LIMIT $1 OFFSET $2
     `
     const values = [limit, offset, `%${search}%`, `%${city}%`, `%${category}%` ]
+    console.log(values)
     const {rows} = await db.query(query, values)
     return rows
 }
