@@ -125,6 +125,31 @@ exports.findOneEvents = async function(id){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+exports.findAllEventByUser = async function(userId){
+    const query = `
+  SELECT
+  "e"."id" as "eventId",
+  "e"."picture",
+  "e"."title" as "event",
+  "ci"."name" as "location",
+  "e"."date",
+  "ci"."id" as "cityId",
+  "e"."descriptions" as "descriptions",
+  "ci"."mapLocation",
+  "e"."createdBy"
+
+  FROM "${table}" "e"
+  JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
+  JOIN "users" "u" ON "u"."id" = "e"."createdBy"
+  WHERE "e"."createdBy"=$1
+  `
+    //Join dari tabel Users , dimana users.id nya = table profile.id
+    //tidak perlu * , ,karena ingin mengambil kolom tertentu saja (bukan semua kolom)
+
+    const values = [userId]
+    const {rows} = await db.query(query, values)
+    return rows
+}
 
 exports.findOneByEmail = async function(email){
     const query = `
@@ -198,20 +223,21 @@ exports.update = async function(id, data){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
-exports.updateByUser = async function(userId, data){
+exports.updateByUser = async function(id, data){
     const query = `
     UPDATE "${table}" 
     SET 
     "picture"=COALESCE(NULLIF($2, ''), "picture"), 
     "title"=COALESCE(NULLIF($3, ''), "title"), 
-    "date"=COALESCE(NULLIF($4::DATE, NULL), "date"), 
-    "cityId"=COALESCE(NULLIF($5::INTEGER, NULL), "cityId"), 
-    "descriptions"=COALESCE(NULLIF($6, ''), "descriptions")
+    "date"=COALESCE(NULLIF($4::DATE, ''), "date"),
+    "cityId"=COALESCE(NULLIF($5::INTEGER, NULL), "cityId"),
+    "createdBy"=COALESCE(NULLIF($6::INTEGER, ''), "createdBy"), 
+    "descriptions"=COALESCE(NULLIF($7, ''), "descriptions") 
     
-    WHERE "createdBy"=$1
+    WHERE "id"=$1
     RETURNING *
     `  
-    const values = [userId, data.picture, data.title, data.date, data.cityId, data.descriptions]   
+    const values = [id, data.picture, data.title, data.date, data.cityId, data.createdBy, data.descriptions]   
     const {rows} = await db.query(query, values)
     return rows[0]
 }
