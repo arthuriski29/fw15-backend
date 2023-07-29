@@ -53,7 +53,7 @@ exports.findAllManage = async function(page, limit, search, sort, sortBy, locati
     return rows
 }
 
-exports.findOneByUserId = async function(userId){
+exports.findAllByUserId = async function(userId){
     const query = `
     SELECT 
     "e"."id" as "eventId", 
@@ -75,6 +75,30 @@ exports.findOneByUserId = async function(userId){
     `
     const values = [userId]
     const {rows} = await db.query(query, values)
+    return rows
+}
+exports.findOneById = async function(id){
+    const query = `
+    SELECT 
+    "e"."id" as "eventId", 
+    "e"."title",
+    "ci"."name" as "location",
+    STRING_AGG("c"."name", ',') as "category",
+    "e"."descriptions",
+    "e"."date",
+    "e"."createdAt",
+    "e"."updatedAt",
+    "e"."createdBy"
+    FROM "eventCategories" "ec"
+    JOIN "events" "e" ON "e"."id" = "ec"."eventId"
+    JOIN "categories" "c" ON "c"."id" = "ec"."categoryId"
+    JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
+    JOIN "users" "u" ON "u"."id" = "e"."createdBy"
+    WHERE "e"."id"=$1
+    GROUP BY "e"."id", "ci"."name";
+    `
+    const values = [id]
+    const {rows} = await db.query(query, values)
     return rows[0]
 }
 
@@ -87,6 +111,21 @@ exports.insertCategory = async function(eventId, data){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+
+exports.update = async function(eventId, categoryId){
+    const query = `
+    UPDATE "${table}" 
+    SET 
+    "categoryId"=COALESCE(NULLIF($2::INTEGER, NULL), "categoryId")
+    
+    WHERE "eventId"=$1
+    RETURNING *
+    `  
+    const values = [eventId, categoryId]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
+
 exports.destroyByUser = async function(eventId){
     const query = `
     DELETE FROM "${table}" 

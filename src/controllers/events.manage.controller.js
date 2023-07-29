@@ -39,31 +39,43 @@ exports.createEvents = async(req, res) => {
 exports.updateEvents = async(req, res) => {
     try {
         const {id} = req.user
-        console.log(id)
-        // const user = await profileModel.findOneByUserId(id)
-        const event = await eventCategoriesModel.findOneByUserId(id)
-        console.log(event)
+        const eventId = req.params.id
         const data = {
-            ...req.body
+            ...req.body,
         }
+               
+        const event = await eventCategoriesModel.findAllByUserId(id)
+
         if(req.file){
             if(event.picture){
-                console.log(event.picture)
+                // console.log(event.picture)
                 fileRemover({filename: event.picture})
             }
             data.picture = req.file.path
         }
-        const create = await eventsModel.updateByUser(id, data)
-        if(!create){
+        const update = await eventsModel.update(eventId, data)
+        console.log(update.picture)
+    
+        const updateCat = await eventCategoriesModel.update(eventId, data.categoryId)
+        console.log(updateCat)
+        console.log(updateCat.categoryId)
+        if(!update){
             throw Error("update_event_failed")
         }
-        // if(data.email){
-        //     await userModel.update(id, data)
-        // }
+        if(!updateCat){
+            throw Error("update_category_event_failed")
+        }
+        
+        const results = await eventCategoriesModel.findOneById(eventId)
+        const allResults = {
+            ...results,
+            picture:update.picture
+        }
+      
         return res.json({
             success: true,
             message: "Event updated",
-            results: create
+            results: allResults
       
         })
     } catch (error) {
