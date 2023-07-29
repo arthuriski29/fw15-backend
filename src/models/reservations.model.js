@@ -79,7 +79,7 @@ exports.findAllByUserId = async function(id, page, limit, search, sort, sortBy, 
 
     const query = `
     SELECT
-    "r"."id" 
+    "r"."id", 
     "e"."title", 
     "ci"."name" as "location",
     "e"."date"
