@@ -50,8 +50,10 @@ exports.createWish = async(req, res) => {
 exports.checkWish = async(req, res) => {
     try {
         const {id} = req.user
-        const {eventId} = req.params.id
+        const {eventId} = req.query
+        console.log(id, eventId)
         const checkWishlist = await wishlistModel.findByUserandEvent(id, eventId)
+        console.log(checkWishlist)
         if(!checkWishlist){
             return res.json({
                 success: false,

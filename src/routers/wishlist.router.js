@@ -4,7 +4,7 @@ const wishlistRouter = require("express").Router()
 const wishlistController = require("../controllers/wishlist.controller")
 
 wishlistRouter.get("/", wishlistController.getWish)
+wishlistRouter.get("/check", wishlistController.checkWish)
 wishlistRouter.post("/", wishlistController.createWish)
-wishlistRouter.post("/check", wishlistController.checkWish)
 
 module.exports = wishlistRouter
