@@ -25,7 +25,7 @@ exports.getOneHistory = async (req, res) => {
         if(!history){
             return res.json({
                 success: false,
-                message: `No history with id ${userId} found`
+                message: `No history with id ${id} found`
             })
         }
 
