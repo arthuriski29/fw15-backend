@@ -5,5 +5,6 @@ const historyController = require("../controllers/history.controller")
 
 // historyRouter.get("/", historyController.getWish)
 historyRouter.get("/", historyController.getAllHistory)
+historyRouter.get("/:id", historyController.getOneHistory)
 
 module.exports = historyRouter

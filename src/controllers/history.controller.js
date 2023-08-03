@@ -9,3 +9,19 @@ exports.getAllHistory = async (req, res)=> {
         results: histories
     })
 }
+exports.getOneHistory = async (req, res) => {
+    try {
+        const {id} = req.params
+        const userId = req.user.id
+        const history = await rsvModel.findOneByUserBooked(id, userId)
+        console.log(history)
+        return res.json({
+            success: true,
+            message: `History with id ${id} displayed`,
+            results: history
+
+        })
+    } catch (err) {
+        throw Error(err.message) 
+    }
+}

@@ -138,6 +138,14 @@ exports.findOne = async function(id){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
+exports.findOneByUserBooked = async function(id, userId){
+    const query = `
+    SELECT * FROM "reservations" WHERE "id"=$1 AND "userId"=$2
+    `  
+    const values = [id, userId]   
+    const {rows} = await db.query(query, values)
+    return rows[0]
+}
 exports.findByUserId = async function(userId){
     const query = `
     SELECT * FROM "reservations" WHERE "userId"=$1
