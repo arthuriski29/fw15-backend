@@ -122,6 +122,7 @@ exports.findOneByUserBooked = async function(id, userId){
     SELECT 
     "r"."id" as "reservationId",
     "e"."title",
+    "c"."name" as "location",
     "e"."date",
     "rt"."quantity",
     "rs"."name" as "section",
@@ -130,6 +131,7 @@ exports.findOneByUserBooked = async function(id, userId){
     "rst"."name" as "status"
     FROM "reservations" "r"
     JOIN "events" "e" ON "e"."id" = "r"."eventId" 
+    JOIN "cities" "c" ON "c"."id" = "e"."cityId" 
     JOIN "paymentMethod" "pm" ON "pm"."id" = "r"."paymentMethodId"
     JOIN "reservationStatus" "rst" ON "rst"."id" = "r"."status"
     JOIN "reservationTicket" "rt" ON "rt"."id" = "r"."id"
