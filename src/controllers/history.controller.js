@@ -28,11 +28,14 @@ exports.getOneHistory = async (req, res) => {
                 message: `No history with id ${id} found`
             })
         }
-
+        const results = {
+            ...history,
+            totalPrice: `Rp ${((history.quantity) * history.price)},-`
+        }
         return res.json({
             success: true,
             message: `History with id ${id} displayed`,
-            results: history
+            results: results
 
         })
     } catch (err) {

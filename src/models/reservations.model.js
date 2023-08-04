@@ -92,29 +92,6 @@ exports.findAllByUserId = async function(id, page, limit, search, sort, sortBy, 
     ORDER BY ${sort} ${sortBy}  
     LIMIT $1 OFFSET $2
     `
-
-    // const query = `
-    // SELECT
-    // "e"."id", 
-    // "e"."picture", 
-    // "e"."title" as "event",
-    // "e"."date",
-    // "ci"."name" as "city",
-    // STRING_AGG("c"."name", ',') as "category",
-    // "e"."descriptions",
-    // "u"."email" as "createdBy",
-    // "e"."createdAt",
-    // "e"."updatedAt"
-    // FROM "${table}" "e"
-    // JOIN "eventCategories" "ec" ON "e"."id" = "ec"."eventId"
-    // JOIN "categories" "c" ON "c"."id" = "ec"."categoryId"
-    // JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
-    // JOIN "users" "u" ON "u"."id" = "e"."createdBy"
-    // WHERE "e"."title" LIKE $3 AND "ci"."name" LIKE $4 AND "c"."name" LIKE $5 
-    // GROUP BY "e"."id", "ci"."name", "u"."email"
-    // ORDER BY "${sort}" ${sortBy} 
-    // LIMIT $1 OFFSET $2
-    // `
     const values = [limit, offset, `%${search}%`, `%${city}%`, id ]
     const {rows} = await db.query(query, values)
     return rows
@@ -132,7 +109,9 @@ exports.insert = async function(data){
 }
 exports.findOne = async function(id){
     const query = `
-    SELECT * FROM "reservations" WHERE "id"=$1
+    SELECT *
+    FROM "reservations"
+    WHERE "id"=$1
     `  
     const values = [id]   
     const {rows} = await db.query(query, values)
@@ -140,7 +119,22 @@ exports.findOne = async function(id){
 }
 exports.findOneByUserBooked = async function(id, userId){
     const query = `
-    SELECT * FROM "reservations" WHERE "id"=$1 AND "userId"=$2
+    SELECT 
+    "r"."id" as "reservationId",
+    "e"."title",
+    "e"."date",
+    "rt"."quantity",
+    "rs"."name" as "section",
+    "pm"."name" as "payment",
+    "rs"."price",
+    "rst"."name" as "status"
+    FROM "reservations" "r"
+    JOIN "events" "e" ON "e"."id" = "r"."eventId" 
+    JOIN "paymentMethod" "pm" ON "pm"."id" = "r"."paymentMethodId"
+    JOIN "reservationStatus" "rst" ON "rst"."id" = "r"."status"
+    JOIN "reservationTicket" "rt" ON "rt"."id" = "r"."id"
+    JOIN "reservationSections" "rs" ON "rs"."id" = "rt"."sectionId"
+    WHERE "r"."id"=$1 AND "r"."userId"=$2
     `  
     const values = [id, userId]   
     const {rows} = await db.query(query, values)
