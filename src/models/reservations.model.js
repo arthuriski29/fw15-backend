@@ -128,7 +128,8 @@ exports.findOneByUserBooked = async function(id, userId){
     "rs"."name" as "section",
     "pm"."name" as "payment",
     "rs"."price",
-    "rst"."name" as "status"
+    "rst"."name" as "status",
+    "r"."createdAt" as "paymentDate"
     FROM "reservations" "r"
     JOIN "events" "e" ON "e"."id" = "r"."eventId" 
     JOIN "cities" "c" ON "c"."id" = "e"."cityId" 
