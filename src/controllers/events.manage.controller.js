@@ -143,4 +143,27 @@ exports.getAllUserEvents = async (req, res) => {
         return errorHandler(res, error)
     }
 }
+exports.getOneUserEvent = async (req, res) => {
+    try {
+        const {id} = req.user
+        const eventId = req.params.id
+        const event = await eventsModel.findOneByUserId(id, eventId)
+        console.log(event)
+
+        if(!event){
+            return res.json({
+                success: false,
+                message: `Event with id ${event.id} not found`,
+            })
+        }
+
+        return res.json({
+            success: true,
+            message: `Get Event with id ${event.id} success`,
+            results: event
+        })
+    } catch (error) {
+        throw Error(error.message)
+    }
+}
 

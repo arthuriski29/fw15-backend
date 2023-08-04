@@ -160,7 +160,7 @@ exports.findOneByEmail = async function(email){
     const {rows} = await db.query(query, values)
     return rows[0]
 }
-exports.findOneByUserId = async function(createdBy){
+exports.findOneByUserId = async function(createdBy, eventId){
     const query = `
     SELECT
     "e"."id" as "eventId",
@@ -176,9 +176,9 @@ exports.findOneByUserId = async function(createdBy){
     JOIN "categories" "cat" ON "cat"."id" = "ec"."categoryId"
     JOIN "cities" "ci" ON "ci"."id" = "e"."cityId"
     JOIN "users" "u" ON "u"."id" = "e"."createdBy"
-    WHERE createdBy=$1
+    WHERE "createdBy"=$1 AND "eventId"=$2;
     `
-    const values = [createdBy]
+    const values = [createdBy, eventId]
     const {rows} = await db.query(query, values)
     return rows[0]
 }

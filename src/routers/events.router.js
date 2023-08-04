@@ -7,6 +7,7 @@ const eventManageController = require("../controllers/events.manage.controller")
 
 eventsRouter.get("/", eventsController.getAllEvents)
 eventsRouter.get("/manage", authMiddleware, eventManageController.getAllUserEvents)
+eventsRouter.get("/manage/:id", authMiddleware, eventManageController.getOneUserEvent)
 eventsRouter.get("/:id", validate("idParams"), eventsController.getOneEvent)
 eventsRouter.post("/manage", uploadMiddleware("picture"), authMiddleware, eventManageController.createEvents)
 eventsRouter.patch("/manage/:id", uploadMiddleware("picture"), authMiddleware, eventManageController.updateEvents)
