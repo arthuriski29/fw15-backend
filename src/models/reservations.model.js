@@ -135,7 +135,7 @@ exports.findOneByUserBooked = async function(id, userId){
     JOIN "cities" "c" ON "c"."id" = "e"."cityId" 
     JOIN "paymentMethod" "pm" ON "pm"."id" = "r"."paymentMethodId"
     JOIN "reservationStatus" "rst" ON "rst"."id" = "r"."status"
-    JOIN "reservationTicket" "rt" ON "rt"."id" = "r"."id"
+    JOIN "reservationTicket" "rt" ON "rt"."reservationId" = "r"."id"
     JOIN "reservationSections" "rs" ON "rs"."id" = "rt"."sectionId"
     WHERE "r"."id"=$1 AND "r"."userId"=$2
     `  
