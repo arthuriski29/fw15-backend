@@ -25,10 +25,14 @@ exports.createEvents = async(req, res) => {
         if(!create) {
             throw Error("no_event_created")
         }
+        const results = {
+            ...create,
+            category: intoCategory.categoryId
+        }
         return res.json({
             success: true,
             message: "Create Events successfully",
-            results: [create, intoCategory]
+            results: results
         })
     } catch (error) {
         return errorHandler(res, error)
