@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 //     optionsSuccessStatus: 200
 // }))
 
-var whitelist = [process.env.FRONTEND_URL, process.env.LOCAL_FRONTEND_URL];
+var whitelist = [process.env.FRONTEND_URL];
 var corsOptions = {
     origin: function (origin, callback) {
         if (origin === undefined || whitelist.indexOf(origin) !== -1) {
