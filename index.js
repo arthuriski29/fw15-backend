@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: ".env",
+    path: ".env",
 });
 
 const express = require("express");
@@ -13,15 +13,15 @@ app.use(express.urlencoded({ extended: false }));
 //     optionsSuccessStatus: 200
 // }))
 
-var whitelist = [process.env.FRONTEND_URL];
+var whitelist = [process.env.FRONTEND_URL, process.env.LOCAL_FRONTEND_URL];
 var corsOptions = {
-  origin: function (origin, callback) {
-    if (origin === undefined || whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+    origin: function (origin, callback) {
+        if (origin === undefined || whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
 };
 app.use(cors(corsOptions));
 
@@ -31,5 +31,5 @@ app.use("/", require("./src/routers/index"));
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}`);
+    console.log(`App running on port ${PORT}`);
 });
